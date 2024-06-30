@@ -1,4 +1,3 @@
-import CardPagination from "@/components/CardPagination";
 import { carlistings } from "@/public/data/carlisting";
 import { StarIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
@@ -19,7 +18,6 @@ const page = () => {
                 className="rounded-2xl w-full h-auto"
               />
             </div>
-
             <div className="p-3 overflow-hidden flex-grow">
               <div className="property-card__body">
                 <div className="grid grid-cols-12 gap-4 lg:gap-6 justify-between">

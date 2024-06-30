@@ -16,7 +16,7 @@ export const carlistings = [
         departureDay: 'Monday',
         arrivalDay: 'Monday',
         departureHour: '08:00',
-        arrivalHour: '12:00'
+        arrivalHour: '12:02'
     },
     {
         id: 2,
