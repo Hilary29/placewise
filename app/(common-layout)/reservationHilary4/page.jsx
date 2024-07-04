@@ -391,7 +391,7 @@ export default function page() {
               <div className="border border-dashed my-8"></div>
               <ul className="gap-4">
                 <li className="flex items-center justify-between flex-wrap">
-                  <p className="mb-0"><b>Departure Date</b></p>
+                  <p className="mb-0"><b>Departure City</b></p>
                   <p className="mb-0 font-medium"><b>{departureCity}</b></p>
                 </li>
                 <li className="flex items-center justify-between flex-wrap">
@@ -400,7 +400,7 @@ export default function page() {
                 </li>
                 <div className="border border-dashed my-8"></div>
                 <li className="flex items-center justify-between flex-wrap">
-                  <p className="mb-0"><b>Arrival Date</b></p>
+                  <p className="mb-0"><b>Arrival City</b></p>
                   <p className="mb-0 font-medium"><b>{arrivalCity}</b></p>
                 </li>
                 <li className="flex items-center justify-between flex-wrap">
@@ -480,7 +480,7 @@ export default function page() {
                   const queryString = new URLSearchParams(
                     Object.entries(data).map(([key, value]) => [key, String(value)])
                   ).toString();
-                  return `reservationHilary3?${queryString}`;
+                  return `reservationHilary5?${queryString}`;
                 })()
               }
               className="link inline-flex items-center gap-2 lg:mt-8 py-3 px-6 rounded-md bg-primary text-white hover:bg-blue-700 font-semibold w-full text-xl justify-center "> 

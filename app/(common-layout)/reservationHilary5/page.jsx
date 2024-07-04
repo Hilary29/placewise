@@ -7,123 +7,27 @@ import Link from "next/link";
 import { Tab } from "@headlessui/react";
 import CheckboxCustom from "@/components/Checkbox";
 import CreditCardIcon from "@heroicons/react/24/solid/CreditCardIcon";
+
 import React,{useState} from "react";
+import { useSearchParams } from 'next/navigation'
 
 
-interface BillingAddressFormProps{
-  onSubmit:(billingAddress:BillingAddressData) => void;
-} 
-
-interface BillingAddressData{
-  name:string;
-  firstName:string;
-  email:string;
-  phoneNumber:string;
-}
-
-const BillingAddressForm: React.FC<BillingAddressFormProps>=({onSubmit})=> {
-  const [name, setName]=useState('');
-  const [firstName, setFirstName]=useState('');
-  const [email, setEmail]=useState('');
-  const [phoneNumber, setPhoneNumber]=useState('');
-
-  const handleSubmit = (e:React.FormEvent) => {
-    e.preventDefault();
-    const billingAddressData: BillingAddressData ={name,firstName,email,phoneNumber};
-    onSubmit(billingAddressData);
-    //Effacer les donnees
-    setName('');
-    setFirstName('');
-    setEmail('');
-    setPhoneNumber('');
-}
-
-
-
-  return (
-    <form action="#" onSubmit={handleSubmit}  >
-                    <div className="grid grid-cols-12 gap-4">
-                      <div className="col-span-12">
-                        <label
-                          htmlFor="name"
-                          className="text-xl font-medium block mb-3">
-                          Name 
-                        </label>
-                        <input
-                          type="text"
-                          className="w-full bg-[var(--bg-1)] border border-neutral-40 rounded-md py-3 px-5 focus:outline-none"
-                          placeholder="Enter Name.."
-                          id="name"
-                          value={name}
-                          onChange={(e)=>setName(e.target.value)}
-                        />
-                      </div>
-                      <div className="col-span-12">
-                        <label
-                          htmlFor="firstName"
-                          className="text-xl font-medium block mb-3">
-                          Firstname 
-                        </label>
-                        <input
-                          type="text"
-                          className="w-full bg-[var(--bg-1)] border border-neutral-40 rounded-md py-3 px-5 focus:outline-none"
-                          placeholder="Enter FirstName.."
-                          id="firstName"
-                          value={firstName}
-                          onChange={(e)=>setFirstName(e.target.value)}
-                        />
-                      </div>
-                      <div className="col-span-12">
-                        <label
-                          htmlFor="email"
-                          className="text-xl font-medium block mb-3">
-                          Email 
-                        </label>
-                        <input
-                          type="email"
-                          className="w-full bg-[var(--bg-1)] border border-neutral-40 rounded-md py-3 px-5 focus:outline-none"
-                          placeholder="Enter Email.."
-                          id="email"
-                          value={email}
-                          onChange={(e)=>setEmail(e.target.value)}
-                        />
-                      </div>
-                      <div className="col-span-12">
-                        <label
-                          htmlFor="phoneNumber"
-                          className="text-xl font-medium block mb-3">
-                          Phone Number
-                        </label>
-                        <input
-                          type="text"
-                          className="w-full bg-[var(--bg-1)] border border-neutral-40 rounded-md py-3 px-5 focus:outline-none"
-                          placeholder=""
-                          id="phoneNumber"
-                          value={phoneNumber}
-                          onChange={(e)=>setPhoneNumber(e.target.value)}
-                        />
-                      </div>
-                      <div className="col-span-12">
-
-                      <button type="submit"
-                  className="link inline-flex items-center gap-2 mt-6 lg:mt-8 py-3 px-6 rounded-md bg-primary text-white text-xl hover:bg-blue-700 font-semibold w-full justify-center mb-6">
-                  <span className="inline-block"> Save Address </span>
-                </button>
-                      </div>
-                    </div>
-                  </form>
-  )
-
-}
-
-function classNames(...classes: any[]) {
+function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
+
+
+
 const Page = () => {
-    const handleFormSubmit = (data: BillingAddressData) => {
+  const searchParams = useSearchParams()
+  const {id, img, price, title, driverName, pass, bag, maxDistance, fuelType, boxType, star, departureCity, arrivalCity, departureDay, arrivalDay, departureHour, arrivalHour, travelClass, totalPrice}
+  = Object.fromEntries(searchParams);
+
+
+    /* const handleFormSubmit = (data: BillingAddressData) => {
         console.log('Submitted data:', data);
-      };
+      }; */
 
       const [showDialog, setShowDialog] = useState(false);
 
@@ -140,6 +44,7 @@ const Page = () => {
     // logique pour appeler l'API de paiement
     console.log("Redirection vers la page de paiement...");
   };
+
 
 
   return (
@@ -205,13 +110,12 @@ const Page = () => {
                 </ul>
               </div>
 
-            <div className="p-3 sm:p-4 lg:p-6 bg-white rounded-md mb-10">     
+            {/* <div className="p-3 sm:p-4 lg:p-6 bg-white rounded-md mb-10">     
                   <h4 className="mb-8 text-2xl font-semibold">
                     Billing Address
                   </h4>             
-                  {/* Formulaire */}
                   <BillingAddressForm onSubmit={handleFormSubmit} />                          
-            </div>
+            </div> */}
             </div>
           </div>
 
@@ -392,7 +296,7 @@ const Page = () => {
                         <i className="las la-check text-lg text-primary"></i>
                       </div>
                       <span className="inline-block">
-                        Price: 20k
+                        Unit Price: {price} FCFA
                       </span>
                     </div>
                   </li>
@@ -402,7 +306,7 @@ const Page = () => {
                         <i className="las la-check text-lg text-primary"></i>
                       </div>
                       <span className="inline-block">
-                       Additionnal Taxes: 30k
+                       Additionnal Taxes: 0%
                       </span>
                     </div>
                   </li>
@@ -412,7 +316,7 @@ const Page = () => {
                         <i className="las la-check text-lg text-primary"></i>
                       </div>
                       <span className="inline-block">
-                        Total Price: 50k
+                        Total Price: {totalPrice} FCFA
                       </span>
                     </div>
                   </li>

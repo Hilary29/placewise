@@ -65,24 +65,24 @@ const page = () => {
                         href={
                           (() => {
                             const data = { 
-                              id, 
-                              img, 
-                              price, 
-                              title, 
-                              driverName, 
-                              pass, 
-                              bag, 
-                              maxDistance, 
-                              fuelType, 
-                              boxType, 
-                              star, 
-                              departureCity, 
-                              arrivalCity, 
-                              departureDay, 
-                              arrivalDay, 
-                              departureHour, 
-                              arrivalHour, 
-                              travelClass
+                              id, //planing id
+                              img, //image de la voiture
+                              price, //prix d'une place
+                              title, // à supprimer
+                              driverName, //nom du chauffeur
+                              pass, //nombre de places disponibles
+                              bag, // nombre de bagages authorisés par personne
+                              maxDistance, // à supprimer par défaut A SUPPRIMER
+                              fuelType, // à supprimer par défaut
+                              boxType, // à supprimer par défaut
+                              star, //nombre d'étoiles
+                              departureCity, // ville de depart
+                              arrivalCity, // ville d'arrivée
+                              departureDay, // jour de departure
+                              arrivalDay, // jour d'arrivée
+                              departureHour, // heure de depart
+                              arrivalHour, // heure d'arrivée
+                              travelClass // classe VIP etc
                             };
                             const queryString = new URLSearchParams(
                               Object.entries(data).map(([key, value]) => [key, String(value)])

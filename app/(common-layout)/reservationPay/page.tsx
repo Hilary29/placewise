@@ -8,6 +8,7 @@ import Link from "next/link";
 import { useState } from "react";
 
 
+ 
 interface PayementStripeFormProps{
     onSubmitStripe:(payement:PayementStripeData) => void;
 }
@@ -18,7 +19,7 @@ interface PayementStripeData{
     description:string;
 
 }
-
+ 
 
 interface PayementCoolPayFormProps{
     onSubmitCoolPay:(payement:PayementCoolPayData) => void;
@@ -41,6 +42,8 @@ interface PayementCoolPayData{
     return classes.filter(Boolean).join(" ");
   }
 
+
+ 
 const PayementStripeForm: React.FC<PayementStripeFormProps>=({onSubmitStripe})=> {
     const [reservationId, setReservationId]=useState('');
     const [price, setPrice]=useState('');
@@ -56,20 +59,86 @@ const PayementStripeForm: React.FC<PayementStripeFormProps>=({onSubmitStripe})=>
         setDescription('');
     }
 
+/*     async function createInvoice(formData: FormData) {
+      'use server'
+      let url: string = ''
+      const rawFormData = {
+        reservationId: formData.get('reservationId'),
+        price: formData.get('price'),
+        Description: formData.get('description'),
+      }
+  
+      
+      console.log(rawFormData)
+   
+      try {
+        const response = await fetch('http://localhost:8080/api/links_pay', {
+          method: 'POST',
+          body: JSON.stringify(rawFormData),
+      
+        });
+    
+        // Gérer la réponse si nécessaire
+        const data = await response.json();
+        console.log(data);
+        url = data.url;
+        console.log(url);
+      } catch (error) {
+        // Gérer l'erreur si nécessaire
+        console.error(error);
+      }
+      if (url !== '') redirect(url);
+    }
+   */
+
 
     return (
-        <form action="#" onSubmit={handleSubmitStripe} >            
-            <label
-                htmlFor="review-phoneNumber"
-                className="text-xl font-medium block mb-0">
-                Phone Number 
-                </label>
-                <input
-                type="text"
-                className="w-full bg-[var(--bg-1)] border border-neutral-40 rounded-md py-3 px-5 focus:outline-none"
-                placeholder=""
-                id="review-phoneNumber"
-                    />
+        <form action='#' onSubmit={handleSubmitStripe} >            
+            <div>
+              <label
+                  htmlFor="review-phoneNumber"
+                  className="text-xl font-medium block mx-2">
+                  Reservation Id
+                  </label>
+                  <input
+                  type="text"
+                  className="w-full bg-[var(--bg-1)] border border-neutral-40 rounded-md py-3 px-5 focus:outline-none"
+                  placeholder=""
+                  id="reservationId"
+                  name="reservationId"
+                      />
+            </div>
+
+            <div >
+              <label
+                  htmlFor="review-phoneNumber"
+                  className="text-xl font-medium block mx-2">
+                  Montant
+                  </label>
+                  <input
+                  type="text"
+                  className="w-full bg-[var(--bg-1)] border border-neutral-40 rounded-md py-3 px-5 focus:outline-none"
+                  placeholder=""
+                  id="price"
+                  name="price"
+                      />
+            </div>
+
+            <div >
+              <label
+                  htmlFor="review-phoneNumber"
+                  className="text-xl font-medium block mx-2">
+                  Description
+                  </label>
+                  <input
+                  type="text"
+                  className="w-full bg-[var(--bg-1)] border border-neutral-40 rounded-md py-3 px-5 focus:outline-none"
+                  placeholder=""
+                  id="description"
+                  name="description"
+                      />
+            </div>
+
                 <button type="submit" className=" inline-flex items-center gap-2 mt-6 lg:mt-8 py-3 px-6 rounded-md bg-primary text-white hover:bg-blue-700 font-semibold text-xl w-full justify-center mb-6 ">
                     Complete payement
                 </button>
@@ -77,6 +146,8 @@ const PayementStripeForm: React.FC<PayementStripeFormProps>=({onSubmitStripe})=>
       )
 
 }
+ 
+
 
 const PayementCoolPayForm: React.FC<PayementCoolPayFormProps>=({onSubmitCoolPay})=> {
     const [transaction_amount, setTransaction_amount]=useState('');
@@ -107,7 +178,7 @@ const PayementCoolPayForm: React.FC<PayementCoolPayFormProps>=({onSubmitCoolPay}
                 <label
                     htmlFor="transaction_amount"
                     className="text-xl font-medium block mb-0">
-                    Montant 
+                    Transaction Amount 
                     </label>
                     <input
                     type="numeric"
@@ -116,18 +187,95 @@ const PayementCoolPayForm: React.FC<PayementCoolPayFormProps>=({onSubmitCoolPay}
                     name="transaction_amount"
                         />
             </div>
+
             <div>
                 <label
-                    htmlFor="transaction_amount"
+                    htmlFor="transaction_currency"
                     className="text-xl font-medium block mb-0">
-                    Montant 
+                    Transaction Currency
                     </label>
                     <input
                     type="numeric"
                     className="w-full bg-[var(--bg-1)] border border-neutral-40 rounded-md py-3 px-5 focus:outline-none"
-                    id="transaction_amount"
+                    id="transaction_currency"
+                    name="transaction_amount"
+                    value="XAF"
                         />
-            </div>             
+            </div>
+
+            <div>
+                <label
+                    htmlFor="transaction_reason"
+                    className="text-xl font-medium block mb-0">
+                    Transaction Reason
+                    </label>
+                    <input
+                    type="text"
+                    className="w-full bg-[var(--bg-1)] border border-neutral-40 rounded-md py-3 px-5 focus:outline-none"
+                    id="transaction_reason"
+                    name="transaction_amount"
+                        />
+            </div>
+
+            <div>
+                <label
+                    htmlFor="customer_phone_number"
+                    className="text-xl font-medium block mb-2">
+                    Phone Number
+                    </label>
+                    <input
+                    type="text"
+                    className="w-full bg-[var(--bg-1)] border border-neutral-40 rounded-md py-3 px-5 focus:outline-none"
+                    id="customer_phone_number"
+                    name="customer_phone_number"
+                        />
+            </div>
+
+            <div>
+                <label
+                    htmlFor="customer_name"
+                    className="text-xl font-medium block mb-0">
+                    Name
+                    </label>
+                    <input
+                    type="text"
+                    className="w-full bg-[var(--bg-1)] border border-neutral-40 rounded-md py-3 px-5 focus:outline-none"
+                    id="customer_name"
+                    name="customer_name"
+                        />
+            </div>
+
+            <div>
+                <label
+                    htmlFor="customer_email"
+                    className="text-xl font-medium block mb-0"
+                    >
+                    Email
+                    </label>
+                    <input
+                    type="text"
+                    className="w-full bg-[var(--bg-1)] border border-neutral-40 rounded-md py-3 px-5 focus:outline-none"
+                    id="customer_email"
+                    name="customer_email"
+                        />
+            </div>
+
+            <div>
+                <label
+                    htmlFor="customer_lang"
+                    className="text-xl font-medium block mb-0">
+                    Language
+                    </label>
+                    <select
+                    className="w-full bg-[var(--bg-1)] border border-neutral-40 rounded-md py-3 px-5 focus:outline-none"
+                    id="customer_lang"
+                    name="customer_lang"
+                    >
+                    <option value="fr">FR</option>
+                    <option value="en">EN</option>
+                  </select>
+
+            </div>
             <button type="submit" className=" inline-flex items-center gap-2 mt-6 lg:mt-8 py-3 px-6 rounded-md bg-primary text-white hover:bg-blue-700 font-semibold text-xl w-full justify-center mb-6 ">
                 Complete payement
             </button>
@@ -259,6 +407,8 @@ const Page = () => {
                   </Tab.Panels>
                 </Tab.Group>
 
+
+{/* 
                 <div>
                 <ul className="flex flex-col gap-4 py-8 ">
                   <li>
@@ -292,12 +442,11 @@ const Page = () => {
                     </div>
                   </li>
                 </ul>
-                </div>               
+                </div>
+ */}
+
+
               </div>
-            
-
-
-
             </div>   
           </div>
         </div>
