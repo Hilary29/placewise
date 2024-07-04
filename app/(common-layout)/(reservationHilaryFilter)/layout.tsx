@@ -3,6 +3,7 @@ import CheckboxCustom from "@/components/Checkbox";
 import CustomRangeSlider from "@/components/RangeSlider";
 import { cabdeparturetimes } from "@/public/data/cabdeparturetime";
 import { cabtypes } from "@/public/data/cablistingcartypes";
+import { carlistings } from "@/public/data/carlisting";
 import { SearchIcon } from "@/public/data/icons";
 import {
   ArrowPathIcon,
@@ -14,9 +15,17 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
-type RadioOption = "rent" | "buy" | "sell";
+
+type RadioOption = "Economic" | "Classic" | "VIP";
 export default function Layout({ children }: { children: React.ReactNode }) {
-  const [Option, setOption] = useState<RadioOption>("rent");
+  const [Option, setOption] = useState<RadioOption>("Economic");
+  const [selectedFilters, setSelectedFilters] = useState<string[]>([]);;
+  const [filteredItems, setFilterItems] = useState(carlistings)
+  const filters= ["Economic","Classic", "VIP"];
+
+
+
+
   const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setOption(event.target.value as RadioOption);
   };
@@ -51,62 +60,22 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 <p className="mb-4 text-[var(--neutral-700)] text-xl font-medium">
                   Category
                 </p>
-                <ul className="flex flex-wrap items-center gap-6">
-                  <li>
-                    <div className="flex items-center gap-2">
-                      <input
-                        className="accent-[var(--primary)] scale-125"
-                        type="radio"
-                        name="property-type"
-                        id="rent-category"
-                        value={"rent"}
-                        onChange={handleOptionChange}
-                        checked={Option === "rent"}
-                      />
-                      <label
-                        className="inline-block text-lg font-medium cursor-pointer"
-                        htmlFor="rent-category">
-                        Economic
-                      </label>
-                    </div>
-                  </li>
-                  <li>
-                    <div className="flex items-center gap-2">
-                      <input
-                        className="accent-[var(--primary)] scale-125"
-                        type="radio"
-                        name="property-type"
-                        id="buy-category"
-                        value={"buy"}
-                        onChange={handleOptionChange}
-                        checked={Option === "buy"}
-                      />
-                      <label
-                        className="inline-block text-lg font-medium cursor-pointer"
-                        htmlFor="buy-category">
-                        Classic
-                      </label>
-                    </div>
-                  </li>
-                  <li>
-                    <div className="flex items-center gap-2">
-                      <input
-                        className="accent-[var(--primary)] scale-125"
-                        type="radio"
-                        name="property-type"
-                        id="sell-category"
-                        value={"sell"}
-                        onChange={handleOptionChange}
-                        checked={Option === "sell"}
-                      />
-                      <label
-                        className="inline-block text-lg font-medium cursor-pointer"
-                        htmlFor="sell-category">
-                        VIP
-                      </label>
-                    </div>
-                  </li>
-                </ul>
+
+
+                {filters.map((category, idx)=>(
+                  <button
+                  onClick={()=>handleFilterButttonClick(category)}
+                  className={`button ${
+                    selectedFilters.includes(category) ? "active" : ""
+                  }`}
+                  key={`${filters}${idx}`}>
+                    {category}
+                  </button>
+
+
+                ))}
+
+
                 <div className="border-t border-dashed my-6"></div>
                 <p className="mb-4 text-[var(--neutral-700)] text-xl font-medium shrink-0">
                   Car Types

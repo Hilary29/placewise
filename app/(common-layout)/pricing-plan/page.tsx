@@ -31,49 +31,12 @@ const Page = () => {
   return (
     <main>
       <div className="py-[60px] lg:py-[120px] bg-[var(--bg-2)] overflow-hidden px-3">
-        <div className="max-w-[570px] mx-auto flex flex-col items-center text-center">
-          <SubHeadingBtn
-            text="Pricing Plan"
-            classes="bg-[var(--primary-light)]"
-          />
-          <h2 className="h2 mt-3">Choose Our Pricing Plan</h2>
-          <p className="text-neutral-600 pt-5 pb-8 lg:pb-14">
-            Real estate can be bought, sold, leased, or rented, and can be a
-            valuable investment opportunity. The value of real estate can be...
-          </p>
-        </div>
+        
         <div className="mb-10">
           <div className="container">
-            <div className="row">
-              <div className="col-span-12">
-                <div className="flex flex-wrap items-center justify-center gap-4">
-                  <div className="flex items-center gap-4">
-                    <span className="inline-block text-xl font-medium clr-neutral-500">
-                      Monthly
-                    </span>
-                    <Switch
-                      checked={enabled}
-                      onChange={setEnabled}
-                      className={`${enabled ? "bg-primary" : "bg-[#EBEBFD]"}
-          relative inline-flex h-[38px] w-[74px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}>
-                      <span className="sr-only">Use setting</span>
-                      <span
-                        aria-hidden="true"
-                        className={`${
-                          enabled
-                            ? "translate-x-9 bg-white"
-                            : "bg-primary translate-x-0"
-                        }
-            pointer-events-none inline-block h-[34px] w-[34px]  transform rounded-full shadow-lg ring-0 transition duration-200 ease-in-out`}
-                      />
-                    </Switch>
-                  </div>
-                  <span className="block font-medium">
-                    Yearly <span className="clr-primary-400">(Save 30%)</span>
-                  </span>
-                </div>
-              </div>
-            </div>
+            
+
+            
           </div>
         </div>
         <div className="container">

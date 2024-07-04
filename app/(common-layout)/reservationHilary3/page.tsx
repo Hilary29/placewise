@@ -106,7 +106,7 @@ const BillingAddressForm: React.FC<BillingAddressFormProps>=({onSubmit})=> {
                       <div className="col-span-12">
 
                       <button type="submit"
-                  className="link inline-flex items-center gap-2 mt-6 lg:mt-8 py-3 px-6 rounded-md bg-primary text-white hover:bg-blue-700 hover:text-white font-medium w-full justify-center mb-6">
+                  className="link inline-flex items-center gap-2 mt-6 lg:mt-8 py-3 px-6 rounded-md bg-primary text-white text-xl hover:bg-blue-700 font-semibold w-full justify-center mb-6">
                   <span className="inline-block"> Save Address </span>
                 </button>
                       </div>
@@ -424,7 +424,7 @@ const Page = () => {
       {/* Lien pour l'action de compléter le paiement */}
       <Link
         href="#" 
-        className="link inline-flex items-center gap-2 mt-6 lg:mt-8 py-3 px-6 rounded-md bg-primary text-white hover:bg-blue-700 hover:text-white font-medium w-full justify-center mb-6"
+        className="link inline-flex items-center gap-2 mt-6 lg:mt-8 py-3 px-6 rounded-md bg-primary text-white hover:bg-blue-700 font-semibold text-xl w-full justify-center mb-6"
         onClick={handleCompletePayment}
       >
         <span className="inline-block">Complete Payment</span>

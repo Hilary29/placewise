@@ -1,18 +1,28 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Tab } from "@headlessui/react";
 import { carlistings } from "@/public/data/carlisting";
-import { ArrowLongRightIcon, CalendarDaysIcon, ChatBubbleLeftEllipsisIcon, ChatBubbleLeftRightIcon, CheckIcon, ClockIcon, StarIcon } from "@heroicons/react/24/outline";
+import { ArrowLongRightIcon, CalendarDaysIcon, ChatBubbleLeftRightIcon, CheckIcon, ClockIcon, StarIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import Link from "next/link";
+import { useSearchParams } from 'next/navigation'
 
 
 
-function classNames(...classes: any[]) {
+function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-const page = () => {
+
+export default function page() {
+  const searchParams = useSearchParams()
+  //console.log("111111",searchParams.entries())
+  const { id, img, price, title, driverName, pass, bag, maxDistance, fuelType, boxType, star, departureCity, arrivalCity, departureDay, arrivalDay, departureHour, arrivalHour, travelClass }
+  = Object.fromEntries(searchParams);
+ 
+ 
+
+
   const [count, setCount] = useState(1);
   const unitPrice = carlistings[3].price;
   const maxSeats = carlistings[3].pass; 
@@ -40,16 +50,16 @@ const page = () => {
             <div className="pb-lg-0">    
               <div className="bg-white  rounded-md p-3 sm:p-4 lg:p-6 mb-6">
               <div className="relative flex justify-between items-center: pb-4">
-  <h3 className="h3">Travel Informations</h3>
-  <Link href="/user-chat" className="link flex items-center relative group">
-    <ChatBubbleLeftRightIcon 
-      className="duration-100 w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-primary hover:bg-[var(--primary-light)] text-white hover:text-primary" 
-    />
-    <span className="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-gray-500">
-      Chat
-    </span>
-  </Link>
-</div>
+                <h3 className="h3">Travel Informations</h3>
+                <Link href="/user-chat" className="link flex items-center relative group">
+                  <ChatBubbleLeftRightIcon 
+                    className="duration-100 w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-primary hover:bg-[var(--primary-light)] text-white hover:text-primary" 
+                  />
+                  <span className="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-gray-500">
+                    Chat
+                  </span>
+                </Link>
+              </div>
 
                 
         
@@ -59,13 +69,13 @@ const page = () => {
                       className={({ selected }) =>
                         classNames(
                           "focus:outline-none",
-                          selected ? "font-medium border-2 border-blue-200 rounded-md" : ""
+                          selected ? "font-medium border-2 border-primary rounded-md" : ""
                         )
                       }>
                         <Image
                       width={154}
                       height={45}
-                      src="/img/carDescription.png"
+                      src={"/img/carDescription.png"}
                       alt="image"
                       className=""
                     />
@@ -95,7 +105,7 @@ const page = () => {
                     <Image
                       width={200}
                       height={260}
-                      src="/img/cab-gallery-2.jpg"
+                      src={img}
                       alt="image"
                       className=" w-full rounded-md" />
                   </div>
@@ -107,7 +117,7 @@ const page = () => {
                             <p
                             
                               className="text-[var(--neutral-700) font-semibold text-xl ">
-                              {carlistings[3].title}
+                              {title}
                             </p>
                           </div>
                           <ul className="columns-1 lg:columns-2 ml-4 list-disc flex-wrap gap-3 md:ps-2">
@@ -123,36 +133,34 @@ const page = () => {
                         <li className="p-6 m-0 text-center flex-grow">
                           <i className="las text-[#279155] la-user-friends text-[32px] inline-block mb-1"></i>
                           <span className="block text-sm max-width mx-auto">
-                            8 Pass
+                            {pass} Pass
                           </span>
                         </li>
                         <li className="p-6 m-0 text-center flex-grow">
                           <i className="las text-[#279155] la-shopping-bag text-[32px] inline-block mb-1"></i>
                           <span className="block text-sm max-width mx-auto">
                             {" "}
-                            5 Bag{" "}
+                            {bag} Bags{" "}
                           </span>
                         </li>
                         <li className="p-6 m-0 text-center flex-grow">
-                          <i className="las la-map-marker text-2xl text-[#22804A]"></i>
+                          <i className="las text-[#279155] la-tachometer-alt text-[32px] inline-block mb-1"></i>
                           <span className="block text-sm max-width mx-auto">
                             {" "}
-                            Yaounde{" "}
+                            {maxDistance} km{" "}
+                          </span>
+                        </li>
+                            <li className="p-6 m-0 text-center flex-grow">
+                              <i className="las text-[#279155] la-gas-pump text-[32px] inline-block mb-1"></i>
+                          <span className="block text-sm max-width mx-auto">
+                          {fuelType}
                           </span>
                         </li>
                         <li className="p-6 m-0 text-center flex-grow">
-                          <i className="las la-clock text-2xl text-[#22804A]"></i>
+                          <i className="las text-[#279155] la-cog text-[32px] inline-block mb-1"></i>
                           <span className="block text-sm max-width mx-auto">
                             {" "}
-                            8:30 Am
-                            {" "}
-                          </span>
-                        </li>
-                        <li className="p-6 m-0 text-center flex-grow">
-                          <i className="las la-calendar-alt text-2xl text-[#22804A]"></i>
-                          <span className="block text-sm max-width mx-auto">
-                            {" "}
-                            05/05/24{" "}
+                            {boxType}{" "}
                           </span>
                         </li>
                       </ul>
@@ -177,7 +185,7 @@ const page = () => {
                 </div>
                 <h4 className="text-center text-2xl font-semibold mb-4">
                   {" "}
-                  Savannah Nguyen{" "}
+                  {driverName}{" "}
                 </h4>
                 <ul className="flex items-center gap-12 justify-center flex-wrap mb-4">
                   <li>
@@ -187,7 +195,8 @@ const page = () => {
                   </li>
                   <li className="text-primary text-lg">•</li>
                   <li>
-                    <p className="mb-0"> Property: 24 </p>
+                  <i className="las la-star text-[var(--tertiary)]"></i>
+                  <p className="mb-0">  </p>
                   </li>
                   <li className="text-primary text-lg">•</li>
                   <li>
@@ -444,7 +453,7 @@ const page = () => {
             </div>    
                 <Link
               href="./reservationHilary3"
-              className="link inline-flex items-center gap-2 lg:mt-8 py-3 px-6 rounded-md bg-primary text-white hover:bg-blue-700 hover:text-white font-medium w-full justify-center ">
+              className="link inline-flex items-center gap-2 lg:mt-8 py-3 px-6 rounded-md bg-primary text-white hover:bg-blue-700 font-semibold w-full text-xl justify-center "> 
               <span className="inline-block"> Proceed Booking </span>
               </Link>
           </div>
@@ -454,5 +463,3 @@ const page = () => {
 </>
 );
 };
-
-export default page;

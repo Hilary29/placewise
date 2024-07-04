@@ -7,7 +7,7 @@ const page = () => {
   
   return (
     <>
-      {carlistings.map(({ id, img, price, title, driverName, pass, bag, maxDistance, fuelType, boxType, star, departureCity, arrivalCity, departureDay, arrivalDay, departureHour, arrivalHour, travelClass }) => (
+      {carlistings.map(({ id, img, price, title, driverName, pass, bag, maxDistance, fuelType, boxType, star, departureCity, arrivalCity, departureDay, arrivalDay, departureHour, arrivalHour }) => (
         <div key={id} className="col-span-12">
           <div className="flex flex-col md:flex-row rounded-2xl p-2 bg-white">
             <div className="bg-[#F5F6FF] rounded-xl shrink">
@@ -30,11 +30,8 @@ const page = () => {
                       </p>
                       <div className="pl-0 lg:pl-6 flex items-center shrink-0">
                         <StarIcon className="w-5 h-5 text-[var(--tertiary)]" />
-                        <span className="block text-[var(--neutral-700)] pr-12">
+                        <span className="block text-[var(--neutral-700)]">
                         {star}
-                        </span>
-                        <span className="block text-[var(--neutral-700)] font-semibold">
-                        {travelClass}
                         </span>
                       </div>
                       
@@ -55,41 +52,14 @@ const page = () => {
                       </span>{" "}        
                     </span>
 
-                    <span className="block mb-8">
+                    <span className="block mb-2">
                       <span className="text-gray-700 font-medium text-xl">                     
                       </span>{" "}
                       <span className="text-gray-400"></span>
                     </span>
 
                     <Link
-                        href={
-                          (() => {
-                            const data = { 
-                              id, 
-                              img, 
-                              price, 
-                              title, 
-                              driverName, 
-                              pass, 
-                              bag, 
-                              maxDistance, 
-                              fuelType, 
-                              boxType, 
-                              star, 
-                              departureCity, 
-                              arrivalCity, 
-                              departureDay, 
-                              arrivalDay, 
-                              departureHour, 
-                              arrivalHour, 
-                              travelClass
-                            };
-                            const queryString = new URLSearchParams(
-                              Object.entries(data).map(([key, value]) => [key, String(value)])
-                            ).toString();
-                            return `reservationHilary2?${queryString}`;
-                          })()
-                      }
+                      href="reservationHilary2"
                       className="btn-primary hover:bg-blue-700 hover:text-white rounded-md font-semibold">
                       Book Now
                     </Link>
