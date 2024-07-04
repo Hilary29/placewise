@@ -46,7 +46,7 @@ const page = () => {
                 <div className="p-4 lg:py-6 lg:px-8 bg-white rounded-2xl shadow-lg xl:fixed">
                   <h4 className="mb-0 text-2xl font-semibold"> Filter </h4>
                   <div className="border-t border-dashed my-6"></div>
-                  <p className="mb-4 text-[var(--neutral-700)] text-xl font-medium">
+                  <p className="mb-4 text-gray-600 text-xl font-bold">
                     Category
                   </p>
 
@@ -108,7 +108,7 @@ const page = () => {
                   </ul>
                  
                 <div className="border-t border-dashed my-6"></div>
-                <p className="mb-4 text-[var(--neutral-700)] text-xl font-medium">
+                <p className="mb-4 text-[var(--neutral-700)] text-gray-600 text-xl font-semibold">
                   Departure City
                 </p>
                 <ul className="flex flex-col gap-3">

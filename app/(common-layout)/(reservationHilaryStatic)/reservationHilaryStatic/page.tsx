@@ -82,7 +82,7 @@ const page = () => {
                               arrivalDay, // jour d'arrivée
                               departureHour, // heure de depart
                               arrivalHour, // heure d'arrivée
-                              travelClass // classe VIP etc
+                              travelClass // classe VIP
                             };
                             const queryString = new URLSearchParams(
                               Object.entries(data).map(([key, value]) => [key, String(value)])
