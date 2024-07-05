@@ -1,99 +1,64 @@
 "use client"
-
 import { Tab } from "@headlessui/react";
 import Image from "next/image";
-import {redirect} from "next/navigation"
+import {redirect} from "next/navigation";
+import React from 'react';
+import { useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation'
 
 import Link from "next/link";
-import { useState } from "react";
 
-
- 
-interface PayementStripeFormProps{
-    onSubmitStripe:(payement:PayementStripeData) => void;
-}
-
-interface PayementStripeData{
-    reservationId:string;
-    price:string;
-    description:string;
-
-}
- 
-
-interface PayementCoolPayFormProps{
-    onSubmitCoolPay:(payement:PayementCoolPayData) => void;
-}
-
-interface PayementCoolPayData{
-    transaction_amount:string;
-    transaction_currency:string;
-    transaction_reason:string;
-    customer_phone_number:string;
-    customer_name:string;
-    customer_email:string;
-    customer_lang:string;
-}
-
-  
-
-  
   function classNames(...classes: any[]) {
     return classes.filter(Boolean).join(" ");
   }
 
 
+
+//En dessous ca marche
  
-const PayementStripeForm: React.FC<PayementStripeFormProps>=({onSubmitStripe})=> {
-    const [reservationId, setReservationId]=useState('');
-    const [price, setPrice]=useState('');
-    const [description, setDescription]=useState('');
+const PayementStripeForm=()=> {
+    const router = useRouter();
 
-    const handleSubmitStripe= (e:React.FormEvent) => {
-        e.preventDefault();
-        const payementData: PayementStripeData={reservationId, price, description};
-        onSubmitStripe(payementData);
-        //Effacer les donnees
-        setReservationId('');
-        setPrice('');
-        setDescription('');
-    }
+  async function createInvoice(formData: FormData) {
+    const rawFormData = {
+      reservationId: formData.get('reservationId'),
+      price: formData.get('price'),
+      description: formData.get('description'),
+    };
 
-/*     async function createInvoice(formData: FormData) {
-      'use server'
-      let url: string = ''
-      const rawFormData = {
-        reservationId: formData.get('reservationId'),
-        price: formData.get('price'),
-        Description: formData.get('description'),
+    console.log(rawFormData);
+
+    try {
+      const response = await fetch('http://localhost:8080/api/links_pay', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(rawFormData),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
-  
-      
-      console.log(rawFormData)
-   
-      try {
-        const response = await fetch('http://localhost:8080/api/links_pay', {
-          method: 'POST',
-          body: JSON.stringify(rawFormData),
-      
-        });
-    
-        // Gérer la réponse si nécessaire
-        const data = await response.json();
-        console.log(data);
-        url = data.url;
-        console.log(url);
-      } catch (error) {
-        // Gérer l'erreur si nécessaire
-        console.error(error);
+
+      const data = await response.json();
+      console.log(data);
+
+      if (data.url) {
+        router.push(data.url);
       }
-      if (url !== '') redirect(url);
+    } catch (error) {
+      console.error('Failed to fetch:', error);
     }
-   */
+  }
 
 
     return (
-        <form action='#' onSubmit={handleSubmitStripe} >            
+        <form action='#' onSubmit={e => {
+          e.preventDefault();
+          const formData = new FormData(e.target as HTMLFormElement);
+          createInvoice(formData);
+        }} >            
             <div>
               <label
                   htmlFor="review-phoneNumber"
@@ -116,7 +81,7 @@ const PayementStripeForm: React.FC<PayementStripeFormProps>=({onSubmitStripe})=>
                   Montant
                   </label>
                   <input
-                  type="text"
+                  type="number"
                   className="w-full bg-[var(--bg-1)] border border-neutral-40 rounded-md py-3 px-5 focus:outline-none"
                   placeholder=""
                   id="price"
@@ -149,31 +114,54 @@ const PayementStripeForm: React.FC<PayementStripeFormProps>=({onSubmitStripe})=>
  
 
 
-const PayementCoolPayForm: React.FC<PayementCoolPayFormProps>=({onSubmitCoolPay})=> {
-    const [transaction_amount, setTransaction_amount]=useState('');
-    const [transaction_currency, setTransaction_currency]=useState('');
-    const [transaction_reason, setTransaction_reason]=useState('');
-    const [customer_phone_number, setCustomer_phone_number]=useState('');
-    const [customer_name, setCustomer_name]=useState('');
-    const [customer_email, setCustomer_email]=useState('');
-    const [customer_lang, setCustomer_lang]=useState('');
+const PayementCoolPayForm =()=> {
 
-    const handleSubmitCoolPay = (e:React.FormEvent) => {
-        e.preventDefault();
-        const payementData: PayementCoolPayData ={transaction_amount,transaction_currency,transaction_reason,customer_phone_number,customer_name,customer_email,customer_lang};
-        onSubmitCoolPay(payementData);
-        //Effacer les donnees
-        setTransaction_amount('');
-        setTransaction_currency('');
-        setTransaction_reason('');
-        setCustomer_phone_number('');
-        setCustomer_name('');
-        setCustomer_email('');
-        setCustomer_lang('');
+  const searchParams = useSearchParams()
+  const {id, img, price, title, driverName, pass, bag, maxDistance, fuelType, boxType, star, departureCity, arrivalCity, departureDay, arrivalDay, departureHour, arrivalHour, travelClass, totalPrice, count}
+  = Object.fromEntries(searchParams);
+
+
+    async function createInvoice(formData: FormData) {
+      /* 'use server' */
+      let url: string = ''
+      const rawFormData = {
+        transaction_amount: formData.get('transaction_amount'),
+        transaction_currency: formData.get('transaction_currency'),
+        transaction_reason: formData.get('transaction_reason'),
+        customer_phone_number: formData.get('customer_phone_number'),
+        customer_name: formData.get('customer_name'),
+        customer_email: formData.get('customer_email'),
+        customer_lang: formData.get('customer_lang:'),
+      }
+  
+      
+      console.log(rawFormData)
+   
+      try {
+        const response = await fetch('https://my-coolpay.com/api/5a219fd9-b249-4a58-b362-1448584ffb42/paylink', {
+          method: 'POST',
+          body: JSON.stringify(rawFormData),
+        })
+   
+        // Handle response if necessary
+        const data = await response.json()
+        console.log(data)
+        if(data.status == 'success'){
+          url = data.payment_url;
+          console.log(url)
+        
+        } 
+        // ...
+      } catch (error) {
+        // Handle error if necessary
+        console.error(error)
+      }
+      if(url !== "")redirect(url)
     }
+  
 
     return (
-        <form action="#" onSubmit={handleSubmitCoolPay} >
+        <form action={createInvoice} >
             <div>
                 <label
                     htmlFor="transaction_amount"
@@ -185,6 +173,7 @@ const PayementCoolPayForm: React.FC<PayementCoolPayFormProps>=({onSubmitCoolPay}
                     className="w-full bg-[var(--bg-1)] border border-neutral-40 rounded-md py-3 px-5 focus:outline-none"
                     id="transaction_amount"
                     name="transaction_amount"
+                    value={totalPrice}
                         />
             </div>
 
@@ -209,12 +198,13 @@ const PayementCoolPayForm: React.FC<PayementCoolPayFormProps>=({onSubmitCoolPay}
                     className="text-xl font-medium block mb-0">
                     Transaction Reason
                     </label>
-                    <input
-                    type="text"
-                    className="w-full bg-[var(--bg-1)] border border-neutral-40 rounded-md py-3 px-5 focus:outline-none"
-                    id="transaction_reason"
-                    name="transaction_amount"
-                        />
+                    <textarea
+                      className="w-full h-40 bg-[var(--bg-1)] font-medium text-lg border border-neutral-40 rounded-md py-3 px-4 focus:outline-none"
+                      id="transaction_reason"
+                      name="transaction_reason"
+                      value={`Reservation de ${count} place(s) pour le voyage ID°${id} en destination de ${departureCity} à ${departureHour} pour ${arrivalCity}. Chauffeur : ${driverName}`}
+                      readOnly // Facultatif : si le champ est en lecture seule
+                    />
             </div>
 
             <div>
@@ -287,13 +277,7 @@ const PayementCoolPayForm: React.FC<PayementCoolPayFormProps>=({onSubmitCoolPay}
 
 
 const Page = () => {
-        const handleFormSubmitStripe = (data: PayementStripeData) => {
-            console.log('Submitted data:', data);
-          };
 
-        const handleFormSubmitCoolPay = (data: PayementCoolPayData) => {
-           console.log('Submitted data:', data);
-          };
 
 
   return (
@@ -382,69 +366,30 @@ const Page = () => {
                   <Tab.Panels className="tab-content">
                     <Tab.Panel>
                         <div className="flex flex-col gap-4">
-                            <PayementStripeForm onSubmitStripe={handleFormSubmitStripe}/>
+                            <PayementStripeForm/>
                         </div>
 
                     </Tab.Panel>
 
                     <Tab.Panel>
                         <div className="flex flex-col gap-4">
-                            <PayementStripeForm onSubmitStripe={handleFormSubmitStripe}/>
+                            <PayementStripeForm/>
                         </div>
                     </Tab.Panel>
 
                     <Tab.Panel>
                         <div className="flex flex-col gap-5">
-                            <PayementCoolPayForm onSubmitCoolPay={handleFormSubmitCoolPay}/>
+                            <PayementCoolPayForm/>
                         </div>
                     </Tab.Panel>
 
                     <Tab.Panel>
                     <div className="flex flex-col gap-5">
-                        <PayementCoolPayForm onSubmitCoolPay={handleFormSubmitCoolPay}/>
+                        <PayementCoolPayForm/>
                     </div>
                     </Tab.Panel>
                   </Tab.Panels>
                 </Tab.Group>
-
-
-{/* 
-                <div>
-                <ul className="flex flex-col gap-4 py-8 ">
-                  <li>
-                    <div className="flex gap-4">
-                      <div className="w-6 h-6 grid place-content-center rounded-full shrink-0 bg-[var(--primary-light)]">
-                        <i className="las la-check text-lg text-primary"></i>
-                      </div>
-                      <span className="inline-block">
-                        Price: 20k
-                      </span>
-                    </div>
-                  </li>
-                  <li>
-                    <div className="flex gap-4">
-                      <div className="w-6 h-6 grid place-content-center rounded-full shrink-0 bg-[var(--primary-light)]">
-                        <i className="las la-check text-lg text-primary"></i>
-                      </div>
-                      <span className="inline-block">
-                       Additionnal Taxes: 30k
-                      </span>
-                    </div>
-                  </li>
-                  <li>
-                    <div className="flex gap-4">
-                      <div className="w-6 h-6 grid place-content-center rounded-full shrink-0 bg-[var(--primary-light)]">
-                        <i className="las la-check text-lg text-primary"></i>
-                      </div>
-                      <span className="inline-block">
-                        Total Price: 50k
-                      </span>
-                    </div>
-                  </li>
-                </ul>
-                </div>
- */}
-
 
               </div>
             </div>   

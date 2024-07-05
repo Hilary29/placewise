@@ -475,12 +475,13 @@ export default function page() {
                     departureHour, 
                     arrivalHour, 
                     travelClass,
-                    totalPrice
+                    totalPrice,
+                    count //Nombre de places choisies
                   };
                   const queryString = new URLSearchParams(
                     Object.entries(data).map(([key, value]) => [key, String(value)])
                   ).toString();
-                  return `reservationHilary3?${queryString}`;
+                  return `reservationPay?${queryString}`;
                 })()
               }
               className="link inline-flex items-center gap-2 lg:mt-8 py-3 px-6 rounded-md bg-primary text-white hover:bg-blue-700 font-semibold w-full text-xl justify-center "> 
