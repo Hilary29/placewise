@@ -8,7 +8,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 type RadioOptionCategory = "allCategory"|"Economic" | "Classic" | "VIP";
-type RadioOptionDepartureCity="allDepartureCity"|"Yaounde"|"Douala"|"Bafoussam"
+type RadioOptionDepartureCity="allDepartureCity"|"Yaounde"|"Douala"|"Bafoussam";
 
 
 const page = () => {
@@ -63,7 +63,7 @@ const page = () => {
                           checked={optionCategory === "Economic"}
                         />
                         <label
-                          className="inline-block text-lg font-medium cursor-pointer"
+                          className="inline-block text-lg font-medium hover:text-blue-900 hover:text-xl hover:font-bold"
                           htmlFor="economic-category">
                           Economic
                         </label>
@@ -81,7 +81,7 @@ const page = () => {
                           checked={optionCategory === "Classic"}
                         />
                         <label
-                          className="inline-block text-lg font-medium cursor-pointer"
+                          className="inline-block text-lg font-medium hover:text-blue-900 hover:text-xl hover:font-bold"
                           htmlFor="economic-category">
                           Classic
                         </label>
@@ -99,7 +99,7 @@ const page = () => {
                           checked={optionCategory === "VIP"}
                         />
                         <label
-                          className="inline-block text-lg font-medium cursor-pointer"
+                          className="inline-block text-lg font-medium hover:text-blue-900 hover:text-xl hover:font-bold"
                           htmlFor="vip-category">
                           VIP
                         </label>
@@ -124,7 +124,7 @@ const page = () => {
                         checked={optionDepartureCity === "Yaounde"}
                     />
                     <label
-                        className="inline-block text-lg font-medium cursor-pointer"
+                        className="inline-block text-lg font-medium hover:text-blue-900 hover:text-xl hover:font-bold"
                         htmlFor="economic-category">
                         Yaounde    
                     </label>
@@ -142,7 +142,7 @@ const page = () => {
                         checked={optionDepartureCity === "Douala"}
                     />
                     <label
-                        className="inline-block text-lg font-medium cursor-pointer"
+                        className="inline-block text-lg font-medium hover:text-blue-900 hover:text-xl hover:font-bold"
                         htmlFor="economic-category">
                         Douala    
                     </label>
@@ -160,7 +160,7 @@ const page = () => {
                         checked={optionDepartureCity === "Bafoussam"}
                     />
                     <label
-                        className="inline-block text-lg font-medium cursor-pointer"
+                        className="inline-block text-lg font-medium hover:text-blue-900 hover:text-xl hover:font-bold"
                         htmlFor="economic-category">
                         Bafoussam    
                     </label>

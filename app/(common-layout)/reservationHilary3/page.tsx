@@ -5,6 +5,7 @@ import {redirect} from "next/navigation";
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import { useSearchParams } from 'next/navigation'
+import axios from 'axios';
 
 import Link from "next/link";
 
@@ -12,6 +13,11 @@ import Link from "next/link";
     return classes.filter(Boolean).join(" ");
   }
 
+//TODO: remplacer par des variables globales à importer
+let RESERVATION_SERVICE_URL = "http://192.168.3.166:8080"
+let ENDPOINTS = {
+  createReservation: "/api/create-reservation",
+}
 
 
 //En dessous ca marche
@@ -136,6 +142,21 @@ const PayementCoolPayForm =()=> {
   
       
       console.log(rawFormData)
+      console.log("================================")
+      // ENREGISTREMENT DE LA RESERVATION EN BD : SERVICE DE RESERVATION
+      let reservationDto = {
+        "userId": "550e8400-e29b-41d4-a716-446655440000", // TODO: remplacer par l'ID de l'utilisateur courant
+        "driverId": "123e4567-e89b-12d3-a456-426614174000", // TODO: remplacer par l'ID du chauffeur (recuperable à partir de l'ID du planing)
+        "planningId": id,
+      }
+      axios.post(RESERVATION_SERVICE_URL+ENDPOINTS.createReservation, reservationDto)
+      .then(response =>{
+        console.log(response)
+        alert(response.data)
+      }).catch(error => {
+        console.log(error)
+        alert(error)
+      })
    
       try {
         const response = await fetch('https://my-coolpay.com/api/5a219fd9-b249-4a58-b362-1448584ffb42/paylink', {
@@ -149,13 +170,15 @@ const PayementCoolPayForm =()=> {
         if(data.status == 'success'){
           url = data.payment_url;
           console.log(url)
-        
+
+          
         } 
         // ...
       } catch (error) {
         // Handle error if necessary
         console.error(error)
       }
+      //TODO: commenter la ligne if(url !== "")redirect(url) pour tester le service de reservation
       if(url !== "")redirect(url)
     }
   
