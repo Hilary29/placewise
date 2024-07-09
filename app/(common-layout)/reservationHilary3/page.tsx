@@ -23,9 +23,13 @@ let ENDPOINTS = {
 //En dessous ca marche
  
 const PayementStripeForm=()=> {
-    const router = useRouter();
+  const router = useRouter();
+  const searchParams = useSearchParams()
+  const {id, img, price, title, driverName, pass, bag, maxDistance, fuelType, boxType, star, departureCity, arrivalCity, departureDay, arrivalDay, departureHour, arrivalHour, travelClass, totalPrice, count}
+  = Object.fromEntries(searchParams);
 
   async function createInvoice(formData: FormData) {
+    let url: string =''
     const rawFormData = {
       reservationId: formData.get('reservationId'),
       price: formData.get('price'),
@@ -33,6 +37,21 @@ const PayementStripeForm=()=> {
     };
 
     console.log(rawFormData);
+    console.log("================================")
+      // ENREGISTREMENT DE LA RESERVATION EN BD : SERVICE DE RESERVATION
+      let reservationDto = {
+        "userId": "550e8400-e29b-41d4-a716-446655440000", // TODO: remplacer par l'ID de l'utilisateur courant
+        "driverId": "123e4567-e89b-12d3-a456-426614174000", // TODO: remplacer par l'ID du chauffeur (recuperable à partir de l'ID du planing)
+        "planningId": id,
+      }
+      axios.post(RESERVATION_SERVICE_URL+ENDPOINTS.createReservation, reservationDto)
+      .then(response =>{
+        console.log(response)
+        alert(response.data)
+      }).catch(error => {
+        console.log(error)
+        alert(error)
+      })
 
     try {
       const response = await fetch('http://localhost:8080/api/links_pay', {
@@ -43,19 +62,22 @@ const PayementStripeForm=()=> {
         body: JSON.stringify(rawFormData),
       });
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
+      // Handle response if necessary
+      const data = await response.json()
+      console.log(data)
+      if(data.status == 'success'){
+        url = data.payment_url;
+        console.log(url)
 
-      const data = await response.json();
-      console.log(data);
-
-      if (data.url) {
-        router.push(data.url);
-      }
+        
+      } 
+      // ...
     } catch (error) {
-      console.error('Failed to fetch:', error);
+      // Handle error if necessary
+      console.error(error)
     }
+    //TODO: commenter la ligne if(url !== "")redirect(url) pour tester le service de reservation
+    if(url !== "")redirect(url)
   }
 
 
@@ -65,9 +87,9 @@ const PayementStripeForm=()=> {
           const formData = new FormData(e.target as HTMLFormElement);
           createInvoice(formData);
         }} >            
-            <div>
+            <div hidden>
               <label
-                  htmlFor="review-phoneNumber"
+                  htmlFor="reservationId"
                   className="text-xl font-medium block mx-2">
                   Reservation Id
                   </label>
@@ -77,37 +99,54 @@ const PayementStripeForm=()=> {
                   placeholder=""
                   id="reservationId"
                   name="reservationId"
+                  value={id}
+                  
                       />
             </div>
 
             <div >
               <label
-                  htmlFor="review-phoneNumber"
+                  htmlFor="price"
                   className="text-xl font-medium block mx-2">
-                  Montant
+                  Transaction Amount
                   </label>
                   <input
-                  type="number"
+                  type="numeric"
                   className="w-full bg-[var(--bg-1)] border border-neutral-40 rounded-md py-3 px-5 focus:outline-none"
                   placeholder=""
                   id="price"
                   name="price"
+                  value={totalPrice}
+                  readOnly 
                       />
+            </div>
+
+            <div>
+                <label
+                    htmlFor="transaction_currency"
+                    className="text-xl font-medium block mb-0">
+                    Transaction Currency
+                    </label>
+                    <input
+                    type="numeric"
+                    className="w-full bg-[var(--bg-1)] border border-neutral-40 rounded-md py-3 px-5 focus:outline-none"
+                    value="XAF"
+                        />
             </div>
 
             <div >
               <label
-                  htmlFor="review-phoneNumber"
+                  htmlFor="descriptionr"
                   className="text-xl font-medium block mx-2">
-                  Description
+                  Transaction Reason
                   </label>
-                  <input
-                  type="text"
-                  className="w-full bg-[var(--bg-1)] border border-neutral-40 rounded-md py-3 px-5 focus:outline-none"
-                  placeholder=""
-                  id="description"
-                  name="description"
-                      />
+                  <textarea
+                      className="w-full h-40 bg-[var(--bg-1)] font-medium text-lg border border-neutral-40 rounded-md py-3 px-4 focus:outline-none"
+                      id="description"
+                      name="description"
+                      value={`Reservation of ${count} seat(s) for the trip on ${departureDay} from ${departureCity} at ${departureHour} to ${arrivalCity}. Driver:  : ${driverName}`}
+                      readOnly 
+                    />
             </div>
 
                 <button type="submit" className=" inline-flex items-center gap-2 mt-6 lg:mt-8 py-3 px-6 rounded-md bg-primary text-white hover:bg-blue-700 font-semibold text-xl w-full justify-center mb-6 ">
@@ -179,7 +218,7 @@ const PayementCoolPayForm =()=> {
         console.error(error)
       }
       //TODO: commenter la ligne if(url !== "")redirect(url) pour tester le service de reservation
-      if(url !== "")redirect(url)
+      //if(url !== "")redirect(url)
     }
   
 
@@ -225,7 +264,7 @@ const PayementCoolPayForm =()=> {
                       className="w-full h-40 bg-[var(--bg-1)] font-medium text-lg border border-neutral-40 rounded-md py-3 px-4 focus:outline-none"
                       id="transaction_reason"
                       name="transaction_reason"
-                      value={`Reservation de ${count} place(s) pour le voyage ID°${id} en destination de ${departureCity} à ${departureHour} pour ${arrivalCity}. Chauffeur : ${driverName}`}
+                      value={`Reservation of ${count} seat(s) for the trip on ${departureDay} from ${departureCity} at ${departureHour} to ${arrivalCity}. Driver : ${driverName}`}
                       readOnly // Facultatif : si le champ est en lecture seule
                     />
             </div>

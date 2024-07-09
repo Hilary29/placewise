@@ -12,7 +12,9 @@ type RadioOptionDepartureCity="allDepartureCity"|"Yaounde"|"Douala"|"Bafoussam";
 
 
 const page = () => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [optionCategory, setOptionCategory] = useState<RadioOptionCategory>("allCategory");
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [optionDepartureCity, setOptionDepartureCity] = useState<RadioOptionDepartureCity>("allDepartureCity");
   
   const handleOptionCategoryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,13 +30,14 @@ const page = () => {
     setOptionDepartureCity("allDepartureCity");
   };
 
-  const path = usePathname();
 
   const filteredCarListings = carlistings.filter((car) => {
     const matchesCategory = optionCategory === "allCategory" || car.travelClass === optionCategory;
     const matchesDepartureCity = optionDepartureCity === "allDepartureCity" || car.departureCity === optionDepartureCity;
     return matchesCategory && matchesDepartureCity;
   });
+
+  const numberOfListings = filteredCarListings.length;
  
   return (
     
@@ -43,14 +46,14 @@ const page = () => {
           <div className="container">
             <div className="grid grid-cols-12 gap-4 lg:gap-6">
               <div className="col-span-12 lg:col-span-4 order-2 lg:order-1">
-                <div className="p-4 lg:py-6 lg:px-8 bg-white rounded-2xl shadow-lg xl:fixed">
+                <div className="p-4 lg:py-6 lg:px-20 bg-white rounded-2xl shadow-lg xl:fixed">
                   <h4 className="mb-0 text-2xl font-semibold"> Filter </h4>
                   <div className="border-t border-dashed my-6"></div>
                   <p className="mb-4 text-gray-600 text-xl font-bold">
                     Category
                   </p>
 
-                  <ul className="flex flex-wrap items-center gap-6">
+                  <ul className="flex flex-col gap-3">
                     <li>
                       <div className="flex items-center gap-2">
                         <input
@@ -189,9 +192,10 @@ const page = () => {
                             Voyages disponibles
                           </p>
                         </li>
-                        <li className="flex-grow">
-        
+                        <li className="flex items-center font-medium text-xl text-primary">
+                          {numberOfListings}
                         </li>
+
                         {/* <li className="hidden lg:flex items-center">
                           <p className="mb-0 clr-neutral-500 flex-grow whitespace-nowrap">
                             Sort By :

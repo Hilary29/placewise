@@ -14,6 +14,7 @@ function classNames(...classes) {
 
 
 export default function page() {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const searchParams = useSearchParams()
   //console.log("111111",searchParams.entries())
   const { id, img, price, title, driverName, pass, bag, maxDistance, fuelType, boxType, star, departureCity, arrivalCity, departureDay, arrivalDay, departureHour, arrivalHour, travelClass }
@@ -22,6 +23,7 @@ export default function page() {
  
 
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [count, setCount] = useState(1);
   const unitPrice = price;
   const maxSeats = pass; 
@@ -85,7 +87,7 @@ export default function page() {
                       className={({ selected }) =>
                         classNames(
                           "focus:outline-none",
-                          selected ? "font-medium border-2 border-blue-200 rounded-md" : ""
+                          selected ? "font-medium border-2 border-primary rounded-md" : ""
                         )
                       }>                    
                       <Image
