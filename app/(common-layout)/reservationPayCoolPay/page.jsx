@@ -6,7 +6,7 @@ import { HandThumbDownIcon, HandThumbUpIcon, HeartIcon, CheckIcon, ClockIcon, St
 import {ChatBubbleLeftRightIcon} from "@heroicons/react/24/outline"
 import Image from "next/image";
 import Link from "next/link";
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation'
 
 
 function classNames(...classes) {
@@ -225,7 +225,7 @@ export default function page() {
                   
                 </ul>
                 <div className="text-center pt-4">
-                  <Link href="/agent-details-review" className="btn-outline rounded-md font-semibold">
+                  <Link href="#" className="btn-outline rounded-md font-semibold">
                     See Host Profile
                   </Link>
                 </div>

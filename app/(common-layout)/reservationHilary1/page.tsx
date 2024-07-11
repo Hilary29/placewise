@@ -7,169 +7,89 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
-type RadioOptionCategory = "allCategory"|"Economic" | "Classic" | "VIP";
-type RadioOptionDepartureCity="allDepartureCity"|"Yaounde"|"Douala"|"Bafoussam";
-
+type RadioOptionCategory = "allCategory" | "Economic" | "Classic" | "VIP";
+type RadioOptionCity = "allCity" | "Yaounde" | "Douala" | "Bafoussam";
 
 const page = () => {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [optionCategory, setOptionCategory] = useState<RadioOptionCategory>("allCategory");
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const [optionDepartureCity, setOptionDepartureCity] = useState<RadioOptionDepartureCity>("allDepartureCity");
-  
-  const handleOptionCategoryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const [optionDepartureCity, setOptionDepartureCity] = useState<RadioOptionCity>("allCity");
+  const [optionArrivalCity, setOptionArrivalCity] = useState<RadioOptionCity>("allCity");
+
+  const handleOptionCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setOptionCategory(event.target.value as RadioOptionCategory);
   };
 
-  const handleOptionDepartureCityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setOptionDepartureCity(event.target.value as RadioOptionDepartureCity);
+  const handleOptionDepartureCityChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setOptionDepartureCity(event.target.value as RadioOptionCity);
+  };
+
+  const handleOptionArrivalCityChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setOptionArrivalCity(event.target.value as RadioOptionCity);
   };
 
   const resetFilters = () => {
     setOptionCategory("allCategory");
-    setOptionDepartureCity("allDepartureCity");
+    setOptionDepartureCity("allCity");
+    setOptionArrivalCity("allCity");
   };
-
 
   const filteredCarListings = carlistings.filter((car) => {
     const matchesCategory = optionCategory === "allCategory" || car.travelClass === optionCategory;
-    const matchesDepartureCity = optionDepartureCity === "allDepartureCity" || car.departureCity === optionDepartureCity;
-    return matchesCategory && matchesDepartureCity;
+    const matchesDepartureCity = optionDepartureCity === "allCity" || car.departureCity === optionDepartureCity;
+    const matchesArrivalCity = optionArrivalCity === "allCity" || car.arrivalCity === optionArrivalCity;
+    return matchesCategory && matchesDepartureCity && matchesArrivalCity;
   });
 
   const numberOfListings = filteredCarListings.length;
- 
-  return (
-    
-      <>
-        <div className="py-[30px] lg:py-[60px] bg-[var(--bg-2)] px-3">
-          <div className="container">
-            <div className="grid grid-cols-12 gap-4 lg:gap-6">
-              <div className="col-span-12 lg:col-span-4 order-2 lg:order-1">
-                <div className="p-4 lg:py-6 lg:px-20 bg-white rounded-2xl shadow-lg xl:fixed">
-                  <h4 className="mb-0 text-2xl font-semibold"> Filter </h4>
-                  <div className="border-t border-dashed my-6"></div>
-                  <p className="mb-4 text-gray-600 text-xl font-bold">
-                    Category
-                  </p>
 
-                  <ul className="flex flex-col gap-3">
-                    <li>
-                      <div className="flex items-center gap-2">
-                        <input
-                          className="accent-[var(--primary)] scale-125"
-                          type="radio"
-                          name="category"
-                          id="Economic"
-                          value={"Economic"}
-                          onChange={handleOptionCategoryChange}
-                          checked={optionCategory === "Economic"}
-                        />
-                        <label
-                          className="inline-block text-lg font-medium hover:text-blue-900 hover:text-xl hover:font-bold"
-                          htmlFor="economic-category">
-                          Economic
-                        </label>
-                      </div>
-                    </li>
-                    <li>
-                      <div className="flex items-center gap-2">
-                        <input
-                          className="accent-[var(--primary)] scale-125"
-                          type="radio"
-                          name="category"
-                          id="Classic"
-                          value={"Classic"}
-                          onChange={handleOptionCategoryChange}
-                          checked={optionCategory === "Classic"}
-                        />
-                        <label
-                          className="inline-block text-lg font-medium hover:text-blue-900 hover:text-xl hover:font-bold"
-                          htmlFor="economic-category">
-                          Classic
-                        </label>
-                      </div>
-                    </li>
-                    <li>
-                      <div className="flex items-center gap-2">
-                        <input
-                          className="accent-[var(--primary)] scale-125"
-                          type="radio"
-                          name="category"
-                          id="VIP"
-                          value={"VIP"}
-                          onChange={handleOptionCategoryChange}
-                          checked={optionCategory === "VIP"}
-                        />
-                        <label
-                          className="inline-block text-lg font-medium hover:text-blue-900 hover:text-xl hover:font-bold"
-                          htmlFor="vip-category">
-                          VIP
-                        </label>
-                      </div>
-                    </li>
-                  </ul>
-                 
+  return (
+    <>
+      <div className="py-[30px] lg:py-[60px] bg-[var(--bg-2)] px-3">
+        <div className="container">
+          <div className="grid grid-cols-12 gap-4 lg:gap-6">
+            <div className="col-span-12 lg:col-span-4 order-2 lg:order-1">
+              <div className="p-4 lg:py-6 lg:px-20 bg-white rounded-2xl shadow-lg xl:fixed">
+                <h4 className="mb-0 text-2xl font-semibold">Filter</h4>
                 <div className="border-t border-dashed my-6"></div>
-                <p className="mb-4 text-[var(--neutral-700)] text-gray-600 text-xl font-semibold">
-                  Departure City
-                </p>
-                <ul className="flex flex-col gap-3">
-                <li>
-                    <div className="flex items-center gap-2">
-                    <input
-                        className="accent-[var(--primary)] scale-125"
-                        type="radio"
-                        name="departure-City"
-                        id="Yaounde"
-                        value={"Yaounde"}
-                        onChange={handleOptionDepartureCityChange}
-                        checked={optionDepartureCity === "Yaounde"}
-                    />
-                    <label
-                        className="inline-block text-lg font-medium hover:text-blue-900 hover:text-xl hover:font-bold"
-                        htmlFor="economic-category">
-                        Yaounde    
-                    </label>
-                    </div>
-                </li>
-                <li>
-                    <div className="flex items-center gap-2">
-                    <input
-                        className="accent-[var(--primary)] scale-125"
-                        type="radio"
-                        name="departure-City"
-                        id="Douala"
-                        value={"Douala"}
-                        onChange={handleOptionDepartureCityChange}
-                        checked={optionDepartureCity === "Douala"}
-                    />
-                    <label
-                        className="inline-block text-lg font-medium hover:text-blue-900 hover:text-xl hover:font-bold"
-                        htmlFor="economic-category">
-                        Douala    
-                    </label>
-                    </div>
-                </li>
-                <li>
-                    <div className="flex items-center gap-2">
-                    <input
-                        className="accent-[var(--primary)] scale-125"
-                        type="radio"
-                        name="departure-City"
-                        id="Bafoussam"
-                        value={"Bafoussam"}
-                        onChange={handleOptionDepartureCityChange}
-                        checked={optionDepartureCity === "Bafoussam"}
-                    />
-                    <label
-                        className="inline-block text-lg font-medium hover:text-blue-900 hover:text-xl hover:font-bold"
-                        htmlFor="economic-category">
-                        Bafoussam    
-                    </label>
-                    </div>
-                </li>
-                </ul>
+                <p className="mb-4 text-gray-600 text-xl font-bold">Category</p>
+                <select
+                  className="w-full py-2 px-3 border border-gray-300 rounded-md text-xl font-normal"
+                  value={optionCategory}
+                  onChange={handleOptionCategoryChange}
+                >
+                  <option value="allCategory"></option>
+                  <option value="Economic">Economic</option>
+                  <option value="Classic">Classic</option>
+                  <option value="VIP">VIP</option>
+                </select>
+
+                <div className="border-t border-dashed my-6"></div>
+                <p className="mb-4 text-[var(--neutral-700)] text-gray-600 text-xl font-semibold">Departure City</p>
+                <select
+                  className="w-full py-2 px-3 border border-gray-300 rounded-md text-xl font-normal"
+                  value={optionDepartureCity}
+                  onChange={handleOptionDepartureCityChange}
+                >
+                  <option value="allCity"></option>
+                  <option value="Yaounde">Yaounde</option>
+                  <option value="Douala">Douala</option>
+                  <option value="Bafoussam">Bafoussam</option>
+                </select>
+
+                <div className="border-t border-dashed my-6"></div>
+                <p className="mb-4 text-[var(--neutral-700)] text-gray-600 text-xl font-semibold">Arrival City</p>
+                <select
+                  className="w-full py-2 px-3 border border-gray-300 rounded-md text-xl font-normal"
+                  value={optionArrivalCity}
+                  onChange={handleOptionArrivalCityChange}
+                >
+                  <option value="allCity"></option>
+                  <option value="Yaounde">Yaounde</option>
+                  <option value="Douala">Douala</option>
+                  <option value="Bafoussam">Bafoussam</option>
+                </select>
+
+                
                 <div className="border-t border-dashed my-6"></div>
                 <button
                   className="outline w-full py-2 px-4 text-primary hover:bg-primary hover:text-white  font-semibold rounded-md"
@@ -212,7 +132,7 @@ const page = () => {
                   </div>
 
 
-                  {filteredCarListings.map(({ id, img, price, title, driverName, pass, bag, maxDistance, fuelType, boxType, star, departureCity, arrivalCity, departureDay, arrivalDay, departureHour, arrivalHour, travelClass }) => (
+                  {filteredCarListings.map(({  id, img, price, title, driverPicture, driverName, driverNumber, driverLocation, driverMail, pass, bag, maxDistance, fuelType, boxType, star, departureCity, arrivalCity, departureDay, arrivalDay, departureHour, arrivalHour, travelClass  }) => (
           <div key={id} className="col-span-12">
             <div className="flex flex-col md:flex-row rounded-2xl p-2 bg-white">
               <div className="bg-[#F5F6FF] rounded-xl shrink">
@@ -274,7 +194,11 @@ const page = () => {
                                 img, 
                                 price, 
                                 title, 
-                                driverName, 
+                                driverPicture,
+                                driverName,
+                                driverLocation,
+                                driverNumber,
+                                driverMail, 
                                 pass, 
                                 bag, 
                                 maxDistance, 
