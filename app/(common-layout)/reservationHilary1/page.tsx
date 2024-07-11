@@ -8,11 +8,15 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 type RadioOptionCategory = "allCategory" | "Economic" | "Classic" | "VIP";
-type RadioOptionCity = "allCity" | "Yaounde" | "Douala" | "Bafoussam";
+type RadioOptionCity = "allCity" | "Bafoussam" | "Bamenda" | "Bertoua" | "Buea" | "Douala" | "Ebolowa" | "Garoua" | "Kribi" | "Limbe" | "Maroua" | "Ngaoundere" | "Yaounde";
+
 
 const page = () => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [optionCategory, setOptionCategory] = useState<RadioOptionCategory>("allCategory");
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [optionDepartureCity, setOptionDepartureCity] = useState<RadioOptionCity>("allCity");
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [optionArrivalCity, setOptionArrivalCity] = useState<RadioOptionCity>("allCity");
 
   const handleOptionCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -71,9 +75,18 @@ const page = () => {
                   onChange={handleOptionDepartureCityChange}
                 >
                   <option value="allCity"></option>
-                  <option value="Yaounde">Yaounde</option>
-                  <option value="Douala">Douala</option>
                   <option value="Bafoussam">Bafoussam</option>
+                  <option value="Bamenda">Bamenda</option>
+                  <option value="Bertoua">Bertoua</option>
+                  <option value="Buea">Buea</option>
+                  <option value="Douala">Douala</option>
+                  <option value="Ebolowa">Ebolowa</option>
+                  <option value="Garoua">Garoua</option>
+                  <option value="Kribi">Kribi</option>
+                  <option value="Limbe">Limbe</option>
+                  <option value="Maroua">Maroua</option>
+                  <option value="Ngaoundere">Ngaoundere</option>
+                  <option value="Yaounde">Yaounde</option>
                 </select>
 
                 <div className="border-t border-dashed my-6"></div>
@@ -84,9 +97,18 @@ const page = () => {
                   onChange={handleOptionArrivalCityChange}
                 >
                   <option value="allCity"></option>
-                  <option value="Yaounde">Yaounde</option>
-                  <option value="Douala">Douala</option>
                   <option value="Bafoussam">Bafoussam</option>
+                  <option value="Bamenda">Bamenda</option>
+                  <option value="Bertoua">Bertoua</option>
+                  <option value="Buea">Buea</option>
+                  <option value="Douala">Douala</option>
+                  <option value="Ebolowa">Ebolowa</option>
+                  <option value="Garoua">Garoua</option>
+                  <option value="Kribi">Kribi</option>
+                  <option value="Limbe">Limbe</option>
+                  <option value="Maroua">Maroua</option>
+                  <option value="Ngaoundere">Ngaoundere</option>
+                  <option value="Yaounde">Yaounde</option>
                 </select>
 
                 
