@@ -357,10 +357,10 @@ const Page = () => {
                   <Tab.List className="flex gap-3 about-tab mb-7">
                     <Tab
                       className={({ selected }) =>
-                        classNames(
-                          "focus:outline-none",
-                          selected ? "font-medium border-2 border-primary rounded-md" : ""
-                        )
+                          classNames(
+                            "focus:outline-none transition-transform transform hover:scale-105",
+                            selected ? "font-medium border-2 border-primary rounded-md" : ""
+                          )
                       }>
                         <Image
                       width={174}
@@ -376,7 +376,7 @@ const Page = () => {
                     <Tab
                       className={({ selected }) =>
                         classNames(
-                          "focus:outline-none",
+                          "focus:outline-none transition-transform transform hover:scale-105",
                           selected ? "font-medium border-2 border-primary rounded-md" : ""
                         )
                       }>
@@ -392,10 +392,10 @@ const Page = () => {
                    
                     <Tab
                       className={({ selected }) =>
-                        classNames(
-                          "focus:outline-none",
-                          selected ? "font-medium border-2 border-primary rounded-md" : ""
-                        )
+                          classNames(
+                            "focus:outline-none transition-transform transform hover:scale-105",
+                            selected ? "font-medium border-2 border-primary rounded-md" : ""
+                          )
                       }>
                       
                       <Image
@@ -410,8 +410,8 @@ const Page = () => {
                     <Tab
                       className={({ selected }) =>
                         classNames(
-                          "focus:outline-none",
-                          selected ? "font-medium border-2 border-primary rounded-md " : ""
+                          "focus:outline-none transition-transform transform hover:scale-105",
+                          selected ? "font-medium border-2 border-primary rounded-md" : ""
                         )
                       }>
 

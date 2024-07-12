@@ -43,6 +43,34 @@ export default function page() {
       setCount(count - 1);
     }
   };
+
+  
+
+  // State for child and handicapped seats
+  const [childSeats, setChildSeats] = useState(0);
+  const [hasChildSeats, setHasChildSeats] = useState(false);
+  const [handicapSeats, setHandicapSeats] = useState(0);
+  const [hasHandicapSeats, setHasHandicapSeats] = useState(false);
+  const childSeatPrice = 1000; // Price per child seat
+  const handicapSeatPrice = 1500; // Price per handicap seat
+
+  const handleChildSeatChange = (event) => {
+    const { value } = event.target;
+    setChildSeats(parseInt(value));
+  };
+
+  const handleHandicapSeatChange = (event) => {
+    const { value } = event.target;
+    setHandicapSeats(parseInt(value));
+  };
+
+  const childSeatsTotal = childSeats * childSeatPrice;
+  const handicapSeatsTotal = handicapSeats * handicapSeatPrice;
+  const additionalSeatsTotal = childSeatsTotal + handicapSeatsTotal;
+
+
+
+
   return (
     <>
        
@@ -54,9 +82,9 @@ export default function page() {
               <div className="bg-white  rounded-md p-3 sm:p-4 lg:p-6 mb-6">
               <div className="relative flex justify-between items-center: pb-4">
                 <h3 className="h3">Travel Informations</h3>
-                <Link href="/user-chat" className="link flex items-center relative group">
+                <Link href="/user-chat" className="link flex items-center relative group transition-transform transform hover:scale-110">
                   <ChatBubbleLeftRightIcon 
-                    className="duration-100 w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-primary hover:bg-[var(--primary-light)] text-white hover:text-primary" 
+                    className="duration-100 w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-primary hover:bg-blue-700 text-white " 
                   />
                   <span className="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-gray-500">
                     Chat
@@ -71,14 +99,14 @@ export default function page() {
                     <Tab
                       className={({ selected }) =>
                         classNames(
-                          "focus:outline-none",
+                          "focus:outline-none transition-transform transform hover:scale-105",
                           selected ? "font-medium border-2 border-primary rounded-md" : ""
                         )
                       }>
                         <Image
                       width={154}
-                      height={45}
-                      src={"/img/carDescription.png"}
+                      height={42}
+                      src={"/img/imgDescription1.png"}
                       alt="image"
                       className=""
                     />
@@ -86,15 +114,15 @@ export default function page() {
                    
                     <Tab
                       className={({ selected }) =>
-                        classNames(
-                          "focus:outline-none",
-                          selected ? "font-medium border-2 border-primary rounded-md" : ""
-                        )
-                      }>                    
+                          classNames(
+                            "focus:outline-none transition-transform transform hover:scale-105",
+                            selected ? "font-medium border-2 border-primary rounded-md" : ""
+                          )
+                        }>                  
                       <Image
                       width={154}
-                      height={45}
-                      src="/img/driverDescription.png"
+                      height={42}
+                      src="/img/imgDescription2.png"
                       alt="image"
                       className=""
                     />
@@ -430,46 +458,114 @@ export default function page() {
 
             <div className="border border-dashed my-0"></div>
             <div className="bg-white rounded-md p-3 sm:p-4 lg:p-6 border">
-              <h4 className="mb-0 text-2xl font-semibold">Pricing Details</h4>
-              <div className="border border-dashed my-8"></div>
-              <ul className="gap-4">
-                <li className="flex items-center justify-between flex-wrap">
-                  <p className="mb-0">Unit Price</p>
-                  <p className="mb-0 font-medium">{price} FCFA</p>
+            <h4 className="mb-0 text-2xl font-semibold">Pricing Details</h4>
+            <div className="border border-dashed my-8"></div>
+            <ul className="space-y-2">
+              <li className="flex items-center justify-between flex-wrap">
+                <p className="mb-0">Unit Price</p>
+                <p className="mb-0 font-medium">{price} FCFA</p>
+              </li>
+              <li className="flex items-center justify-between flex-wrap">
+                <p className="mb-0">Number of Seats</p>
+                <div className="flex items-center">
+                  <button
+                    className="px-[11px] py-1 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300"
+                    onClick={increment}
+                  >
+                    +
+                  </button>
+                  <span className="px-[14px]">{count}</span>
+                  <button
+                    className="px-3 py-1 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300"
+                    onClick={decrement}
+                  >
+                    -
+                  </button>
+                  
+                  
+                </div>       
+              </li>
+              <li className="flex items-center justify-between flex-wrap">
+              <p className="mb-0">Child Seats</p>
+                      <div className="flex items-center gap-8">
+                        <button
+                          className={`px-2 py-1 rounded-md ${hasChildSeats ? 'bg-green-100 ' : 'bg-gray-100 '} hover:bg-green-300`}
+                          onClick={() => setHasChildSeats(true)}
+                        >
+                          <i className="las la-check text-lg text-green-600"></i>
+                        </button>
+                        <button
+                          className={`px-2 py-1 rounded-md ${!hasChildSeats ? 'bg-orange-100' : 'bg-gray-100'} hover:bg-orange-300`}
+                          onClick={() => {
+                            setHasChildSeats(false);
+                            setChildSeats(0);
+                          }}
+                        >
+                          <i className="las la-times text-lg text-red-500"></i>
+                        </button>
+                      </div>
+                      </li>
+                      {hasChildSeats && (
+                        <>
+                        <li className="flex items-center justify-between flex-wrap">
+                        <input
+                          type="number"
+                          className="w-16 p-1 border rounded-md"
+                          value={childSeats}
+                          onChange={handleChildSeatChange}
+                        />
+                      
+                      <p className="mb-0 font-medium">{childSeatsTotal} FCFA</p>
+                      </li>
+                      </>)}
+                    
+                    
+                  <li className="flex items-center justify-between flex-wrap">
+                  <p className="mb-0">Handicap Seats</p>
+                  <div className="flex items-center gap-8">
+                    <button
+                      className={`px-2 py-1 rounded-md ${hasHandicapSeats ? 'bg-green-100 ' : 'bg-gray-100 '} hover:bg-green-300`}
+                      onClick={() => setHasHandicapSeats(true)}
+                    >
+                      <i className="las la-check text-lg text-green-600"></i>
+                    </button>
+                    <button
+                      className={`px-2 py-1 rounded-md ${!hasHandicapSeats ? 'bg-orange-100' : 'bg-gray-100'} hover:bg-orange-300`}
+                      onClick={() => {
+                        setHasHandicapSeats(false);
+                        setHandicapSeats(0);
+                      }}
+                    >
+                      <i className="las la-times text-lg text-red-500"></i>
+                    </button>
+                  </div>
                 </li>
-                <li className="flex items-center justify-between flex-wrap">
-                  <p className="mb-0">Number of Seats</p>
-                  <div className="flex items-center">
-                      <button
-                        className="px-3 py-1 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300"
-                        onClick={decrement}
-                      >
-                        -
-                      </button>
-                      <span className="px-4">{count}</span>
-                      <button
-                        className="px-3 py-1 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300"
-                        onClick={increment}
-                      >
-                        +
-                      </button>
-                    </div>       
-                </li>
+                {hasHandicapSeats && (
+                  <li className="flex items-center justify-between flex-wrap">
+                    <input
+                      type="number"
+                      className="w-16 p-1 border rounded-md"
+                      value={handicapSeats}
+                      onChange={handleHandicapSeatChange}
+                    />
+                    <p className="mb-0 font-medium">{handicapSeatsTotal} FCFA</p>
+                  </li>
+                )}
                 <li className="flex items-center justify-between flex-wrap">
                   <p className="mb-0">Tax</p>
                   <p className="mb-0 font-medium">0%</p>
                 </li>
                 <li className="flex items-center justify-between flex-wrap">
                   <p className="mb-0">Total price</p>
-                  <p className="mb-0 font-medium">{totalPrice} FCFA</p>
+                  <p className="mb-0 font-medium">{price * count + additionalSeatsTotal} FCFA</p>
                 </li>
               </ul>
               <div className="border border-dashed my-8"></div>
               <div className="flex items-center justify-between flex-wrap mb-6">
                 <p className="mb-0">Payable Now</p>
-                <p className="mb-0 font-medium">{totalPrice} FCFA</p>
+                <p className="mb-0 font-medium">{price * count + additionalSeatsTotal} FCFA</p>
               </div>
-            </div> 
+            </div>
             <Link
               href={
                 (() => {
@@ -503,40 +599,7 @@ export default function page() {
               }
               className="link inline-flex items-center gap-2 lg:mt-8 py-3 px-6 rounded-md bg-primary text-white hover:bg-blue-700 font-semibold w-full text-xl justify-center "> 
               <span className="inline-block"> Proceed Booking </span>
-            </Link>   
-               {/*  <Link
-              href={
-                (() => {
-                  const data = { 
-                    id, 
-                    img, 
-                    price, 
-                    title, 
-                    driverName, 
-                    pass, 
-                    bag, 
-                    maxDistance, 
-                    fuelType, 
-                    boxType, 
-                    star, 
-                    departureCity, 
-                    arrivalCity, 
-                    departureDay, 
-                    arrivalDay, 
-                    departureHour, 
-                    arrivalHour, 
-                    travelClass
-                  };
-                  const queryString = new URLSearchParams(
-                    Object.entries(data).map(([key, value]) => [key, String(value)])
-                  ).toString();
-                  return `reservationHilary3?${queryString}`;
-                })()
-            }
-              className="link inline-flex items-center gap-2 lg:mt-8 py-3 px-6 rounded-md bg-primary text-white hover:bg-blue-700 font-semibold w-full text-xl justify-center "> 
-              <span className="inline-block"> Proceed Booking </span>
-              </Link> */}
-              
+            </Link>                
           </div>
         </div>
       </div>
