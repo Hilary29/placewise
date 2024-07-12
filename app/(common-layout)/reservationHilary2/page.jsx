@@ -29,47 +29,49 @@ export default function page() {
   const unitPrice = price;
   const maxSeats = pass; 
   const tax = 0; 
-  const totalPrice = (unitPrice * count) * (1 + tax / 100);
+  
   
 
-  const increment = () => {
-    if (count < maxSeats) {
-      setCount(count + 1);
-    }
-  };
-
-  const decrement = () => {
-    if (count > 1) {
-      setCount(count - 1);
-    }
-  };
-
-  
-
-  // State for child and handicapped seats
   const [childSeats, setChildSeats] = useState(0);
   const [hasChildSeats, setHasChildSeats] = useState(false);
   const [handicapSeats, setHandicapSeats] = useState(0);
   const [hasHandicapSeats, setHasHandicapSeats] = useState(false);
-  const childSeatPrice = 1000; // Price per child seat
-  const handicapSeatPrice = 1500; // Price per handicap seat
+  const childSeatPrice = unitPrice/2; // Price per child seat
+  const handicapSeatPrice = unitPrice*(2/3); // Price per handicap seat
+
+  const handleSeatChange = (setSeatFunction, value, otherSeatCount) => {
+    const newSeatCount = parseInt(value, 10);
+    if (newSeatCount + otherSeatCount + count <= maxSeats) {
+      setSeatFunction(newSeatCount);
+    }
+  };
 
   const handleChildSeatChange = (event) => {
-    const { value } = event.target;
-    setChildSeats(parseInt(value));
+    handleSeatChange(setChildSeats, event.target.value, handicapSeats);
   };
 
   const handleHandicapSeatChange = (event) => {
-    const { value } = event.target;
-    setHandicapSeats(parseInt(value));
+    handleSeatChange(setHandicapSeats, event.target.value, childSeats);
   };
 
   const childSeatsTotal = childSeats * childSeatPrice;
   const handicapSeatsTotal = handicapSeats * handicapSeatPrice;
   const additionalSeatsTotal = childSeatsTotal + handicapSeatsTotal;
 
+  const increment = () => {
+    if (count + childSeats + handicapSeats < maxSeats) {
+      setCount(count + 1);
+    }
+  };
 
+  const decrement = () => {
+    if (count > 0) {
+      setCount(count - 1);
+    }
+  };
 
+  const totalPrice = (price * count + additionalSeatsTotal) * (1 + tax / 100);
+  
 
   return (
     <>
@@ -466,7 +468,7 @@ export default function page() {
                 <p className="mb-0 font-medium">{price} FCFA</p>
               </li>
               <li className="flex items-center justify-between flex-wrap">
-                <p className="mb-0">Number of Seats</p>
+                <p className="mb-0">Normal Seat(s)</p>
                 <div className="flex items-center">
                   <button
                     className="px-[11px] py-1 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300"
@@ -486,7 +488,7 @@ export default function page() {
                 </div>       
               </li>
               <li className="flex items-center justify-between flex-wrap">
-              <p className="mb-0">Child Seats</p>
+              <p className="mb-0">Child Seat(s)</p>
                       <div className="flex items-center gap-8">
                         <button
                           className={`px-2 py-1 rounded-md ${hasChildSeats ? 'bg-green-100 ' : 'bg-gray-100 '} hover:bg-green-300`}
@@ -506,22 +508,24 @@ export default function page() {
                       </div>
                       </li>
                       {hasChildSeats && (
-                        <>
+                        
                         <li className="flex items-center justify-between flex-wrap">
                         <input
                           type="number"
                           className="w-16 p-1 border rounded-md"
                           value={childSeats}
                           onChange={handleChildSeatChange}
+                          min={0}
+                          max={maxSeats - count - handicapSeats}
                         />
                       
                       <p className="mb-0 font-medium">{childSeatsTotal} FCFA</p>
                       </li>
-                      </>)}
+                      )}
                     
                     
                   <li className="flex items-center justify-between flex-wrap">
-                  <p className="mb-0">Handicap Seats</p>
+                  <p className="mb-0">Handicap Seat(s)</p>
                   <div className="flex items-center gap-8">
                     <button
                       className={`px-2 py-1 rounded-md ${hasHandicapSeats ? 'bg-green-100 ' : 'bg-gray-100 '} hover:bg-green-300`}
@@ -547,6 +551,8 @@ export default function page() {
                       className="w-16 p-1 border rounded-md"
                       value={handicapSeats}
                       onChange={handleHandicapSeatChange}
+                      min={0}
+                      max={maxSeats - count - childSeats}
                     />
                     <p className="mb-0 font-medium">{handicapSeatsTotal} FCFA</p>
                   </li>
@@ -557,7 +563,7 @@ export default function page() {
                 </li>
                 <li className="flex items-center justify-between flex-wrap">
                   <p className="mb-0">Total price</p>
-                  <p className="mb-0 font-medium">{price * count + additionalSeatsTotal} FCFA</p>
+                  <p className="mb-0 font-medium">{totalPrice} FCFA</p>
                 </li>
               </ul>
               <div className="border border-dashed my-8"></div>
@@ -575,7 +581,9 @@ export default function page() {
                     price, 
                     title, 
                     driverName, 
-                    pass, 
+                    pass,
+                    childSeats,
+                    handicapSeats, 
                     bag, 
                     maxDistance, 
                     fuelType, 

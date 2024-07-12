@@ -9,7 +9,7 @@ export const carlistings = [
         driverMail: '***@gmail.com',
         price: 3000,
         img:'/img/car-list-1.jpg',
-        pass: 4,
+        pass: 4,//Places passager normal
         bag: 1,
         maxDistance: 120,
         fuelType:'Petrol',

@@ -25,7 +25,7 @@ let ENDPOINTS = {
 const PayementStripeForm=()=> {
   const router = useRouter();
   const searchParams = useSearchParams()
-  const {id, img, price, title, driverName, pass, bag, maxDistance, fuelType, boxType, star, departureCity, arrivalCity, departureDay, arrivalDay, departureHour, arrivalHour, travelClass, totalPrice, count}
+  const {id, img, price, title, driverName, pass, childSeats, handicapSeats, bag, maxDistance, fuelType, boxType, star, departureCity, arrivalCity, departureDay, arrivalDay, departureHour, arrivalHour, travelClass, totalPrice, count}
   = Object.fromEntries(searchParams);
 
   async function createInvoice(formData: FormData) {
@@ -141,10 +141,10 @@ const PayementStripeForm=()=> {
                   Transaction Reason
                   </label>
                   <textarea
-                      className="w-full h-40 bg-[var(--bg-1)] font-medium text-lg border border-neutral-40 rounded-md py-3 px-4 focus:outline-none"
+                      className="w-full h-40 bg-[var(--bg-1)] font-medium text-l g border border-neutral-40 rounded-md py-3 px-4 focus:outline-none"
                       id="description"
                       name="description"
-                      value={`Reservation of ${count} seat(s) for the trip on ${departureDay} from ${departureCity} at ${departureHour} to ${arrivalCity}. Driver:  : ${driverName}`}
+                      value={`Reservation of ${count} normal seat(s), ${childSeats} child seat(s) and ${handicapSeats} handicap seat(s) for the trip on ${departureDay} from ${departureCity} at ${departureHour} to ${arrivalCity}. Driver:  : ${driverName}`}
                       readOnly 
                     />
             </div>
@@ -162,7 +162,7 @@ const PayementStripeForm=()=> {
 const PayementCoolPayForm =()=> {
 
   const searchParams = useSearchParams()
-  const {id, img, price, title, driverName, pass, bag, maxDistance, fuelType, boxType, star, departureCity, arrivalCity, departureDay, arrivalDay, departureHour, arrivalHour, travelClass, totalPrice, count}
+  const {id, img, price, title, driverName, pass, childSeats, handicapSeats, bag, maxDistance, fuelType, boxType, star, departureCity, arrivalCity, departureDay, arrivalDay, departureHour, arrivalHour, travelClass, totalPrice, count}
   = Object.fromEntries(searchParams);
 
 
@@ -218,7 +218,7 @@ const PayementCoolPayForm =()=> {
         console.error(error)
       }
       //TODO: commenter la ligne if(url !== "")redirect(url) pour tester le service de reservation
-      //if(url !== "")redirect(url)
+      if(url !== "")redirect(url)
     }
   
 
@@ -264,7 +264,7 @@ const PayementCoolPayForm =()=> {
                       className="w-full h-40 bg-[var(--bg-1)] font-medium text-lg border border-neutral-40 rounded-md py-3 px-4 focus:outline-none"
                       id="transaction_reason"
                       name="transaction_reason"
-                      value={`Reservation of ${count} seat(s) for the trip on ${departureDay} from ${departureCity} at ${departureHour} to ${arrivalCity}. Driver : ${driverName}`}
+                      value={`Reservation of ${count} normal seat(s), ${childSeats} child seat(s) and ${handicapSeats} handicap seat(s) for the trip on ${departureDay} from ${departureCity} at ${departureHour} to ${arrivalCity}. Driver:  : ${driverName}`}
                       readOnly // Facultatif : si le champ est en lecture seule
                     />
             </div>
