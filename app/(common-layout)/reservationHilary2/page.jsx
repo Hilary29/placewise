@@ -7,6 +7,21 @@ import {ChatBubbleLeftRightIcon} from "@heroicons/react/24/outline"
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from 'next/navigation';
+import {
+  CameraIcon,
+  FaceSmileIcon,
+  MagnifyingGlassIcon,
+  PaperAirplaneIcon,
+  PhoneIcon,
+  PlusCircleIcon,
+  VideoCameraIcon,
+  XMarkIcon,
+  PaperClipIcon, DocumentIcon
+} from "@heroicons/react/24/outline";
+import InputEmoji from "react-input-emoji";
+import { useRef } from "react";
+import { data } from 'autoprefixer';
+import { MicrophoneIcon, StopIcon } from "@heroicons/react/20/solid";
 
 
 function classNames(...classes) {
@@ -15,6 +30,7 @@ function classNames(...classes) {
 
 
 export default function page() {
+  const scrollRef = useRef(null);
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const searchParams = useSearchParams()
   //console.log("111111",searchParams.entries())
@@ -71,6 +87,15 @@ export default function page() {
   };
 
   const totalPrice = (price * count + additionalSeatsTotal) * (1 + tax / 100);
+
+  const [isChat, setIsChat] = useState(false);
+
+  const handleChatClick = () => {
+    setIsChat((prevIsChat) => !prevIsChat);
+  }
+
+  const selectedImage = true
+  const [text, setText] = useState('');
   
 
   return (
@@ -84,14 +109,14 @@ export default function page() {
               <div className="bg-white  rounded-md p-3 sm:p-4 lg:p-6 mb-6">
               <div className="relative flex justify-between items-center: pb-4">
                 <h3 className="h3">Travel Informations</h3>
-                <Link href="/user-chat" className="link flex items-center relative group transition-transform transform hover:scale-110">
+                <button onClick={handleChatClick} className="link flex items-center relative group transition-transform transform hover:scale-110">
                   <ChatBubbleLeftRightIcon 
                     className="duration-100 w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-primary hover:bg-blue-700 text-white " 
                   />
                   <span className="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-gray-500">
                     Chat
                   </span>
-                </Link>
+                </button>
               </div>
 
                 
@@ -140,7 +165,8 @@ export default function page() {
                       height={260}
                       src={img}
                       alt="image"
-                      className=" w-full rounded-md" />
+                      className=" w-full rounded-md" 
+                    />
                   </div>
                   <div className="p-3 overflow-hidden flex-grow">
                     <div className="property-card__body">
@@ -433,6 +459,152 @@ export default function page() {
             </div>
           </div>
           <div className="col-span-12 lg:col-span-4">
+            <div id='chatBox' className={`fixed z-[4] h-[100%] max-h-[100vh] w-[34%] bg-white rounded-md border shadow-lg ${
+              isChat ? 'block top-[10px]' : 'hidden'
+              }`}
+            >
+              <div className="flex items-center gap-4 mb-4 p-2">
+                <div className="w-10 h-10 relative z-[1] rounded-full shrink-0">
+                  <Image
+                    width={30}
+                    height={30}
+                    src='/public/img/user-1.PNG'
+                    alt="image"
+                    className="w-full h-full object-fit-cover overflow-hidden rounded-full"
+                  />
+                  <span className="inline-block w-4 h-4 rounded-full bg-[#37D27A] absolute end-0 bottom-0 z-[1]"></span>
+                </div>
+                <h5 className="mb-2 flex-grow clr-neutral-500 text-sl font-medium">{driverName}</h5>
+                <Link
+                  href="#"
+                  className="link inline-block shrink-0 text-[var(--neutral-700)] hover:text-primary">
+                  <VideoCameraIcon className="w-8 h-8 text-[var(--neutral-700)] hover:text-primary hover:fill-primary transition-colors duration-300 ease-in-out" />
+                </Link>
+                <button onClick={handleChatClick} className="close-button  hover:text-primary" style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  width: '32px',
+                  height: '32px',
+                  border: 'none',
+                  cursor: 'pointer',
+                }}
+                >
+                  <XMarkIcon className="close-icon hover:text-primary w-8 h-8 text-[var(--neutral-700)] hover:text-primary hover:fill-primary transition-colors duration-300 ease-in-out" style={{
+                    width: '24px',
+                    height: '24px',
+                    color: '#4b5563', // Gray-600
+                  }}/>
+                </button>
+              </div>
+              <div className="h-[100%] max-h-[79vh] scrollbar-hide bg-[#EAEBFD] overflow-y-auto p-4"
+                style={{ overflowY: "auto" }}
+                ref={scrollRef}>
+                <ul className="flex flex-col gap-4">
+                  <li>
+                    <div className="flex flex-col items-start">
+                      <div className="w-12 h-12 rounded-full overflow-hidden mb-4">
+                        <Image
+                          width={48}
+                          height={48}
+                          src="/img/user-5.jpg"
+                          alt="image"
+                          className="w-full h-full object-fit-cover"
+                        />
+                      </div>
+                      <div className="bg-white rounded-lg py-3 px-5 md:max-w-[45%] relative after:absolute after:top-[-12px] after:left-4 after:border-l-[12px] after:border-l-transparent after:border-r-[12px] after:border-r-transparent after:border-b-[12px] after:border-b-white">
+                        <p className="inline-block mb-0 clr-neutral-500 text-sl">
+                          Lorem Ipsum is simply dummy text of the printing
+                        </p>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div className="flex flex-col items-end">
+                      <div className="bg-white rounded-lg py-3 px-5 md:max-w-[45%]  relative after:absolute after:bottom-[-12px] after:right-4 after:border-l-[12px] after:border-l-transparent after:border-r-[12px] after:border-r-transparent after:border-t-[12px] after:border-t-white">
+                        <p className="inline-block mb-0 clr-neutral-500">
+                          I play Stronghold Kingdoms
+                        </p>
+                      </div>
+                      <div className="w-12 h-12 rounded-full overflow-hidden mt-4">
+                        <Image
+                          width={48}
+                          height={48}
+                          src="/img/user-2.jpg"
+                          alt="image"
+                          className="w-full h-full object-fit-cover"
+                        />
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div className="flex flex-col items-end">
+                      <div className="bg-white rounded-lg py-3 px-5 md:max-w-[45%]  relative after:absolute after:bottom-[-12px] after:right-4 after:border-l-[12px] after:border-l-transparent after:border-r-[12px] after:border-r-transparent after:border-t-[12px] after:border-t-white">
+                        <p className="inline-block mb-0 clr-neutral-500">
+                          I play Stronghold Kingdoms
+                        </p>
+                      </div>
+                      <div className="w-12 h-12 rounded-full overflow-hidden mt-4">
+                        <Image
+                          width={48}
+                          height={48}
+                          src="/img/user-2.jpg"
+                          alt="image"
+                          className="w-full h-full object-fit-cover"
+                        />
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div className="flex flex-col items-end">
+                      <div className="bg-white rounded-lg py-3 px-5 md:max-w-[45%]  relative after:absolute after:bottom-[-12px] after:right-4 after:border-l-[12px] after:border-l-transparent after:border-r-[12px] after:border-r-transparent after:border-t-[12px] after:border-t-white">
+                        <p className="inline-block mb-0 clr-neutral-500">
+                          I play Stronghold Kingdoms
+                        </p>
+                      </div>
+                      <div className="w-12 h-12 rounded-full overflow-hidden mt-4">
+                        <Image
+                          width={48}
+                          height={48}
+                          src="/img/user-2.jpg"
+                          alt="image"
+                          className="w-full h-full object-fit-cover"
+                        />
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div className="flex justify-content-flex shrink-0 w-full h-14 mt-2">
+                <button type="button" className="ml-2 mr-2 hover:text-primary">
+                  <DocumentIcon className="h-6 w-6 text-gray-500  hover:text-primary" />
+                </button>
+                <button type="button" className='mr-1 hover:text-primary'>
+                  <PaperClipIcon className="h-6 w-6 text-gray-500  hover:text-primary" />
+                </button>
+                <button
+                  type="button"
+                  // onClick={startAudioRecording}
+                  className="link inline-block clr-neutral-500text-[var(--neutral-700)] hover:text-primary hover:fill-primary transition-colors duration-300 ease-in-out"
+                >
+                  <MicrophoneIcon className="w-8 h-8" />
+                </button>
+                <InputEmoji
+                  className=' hover:text-primary'
+                  value={text}
+                  onChange={setText}
+                  cleanOnEnter
+                  shouldReturn
+                  shouldConvertEmojiToImage={false}
+                  placeholder="Type a message"
+                  // onKeyDown={(e) => {
+                  //   if (e.key === "Enter") {
+                  //     handleSendMessage();
+                  //   }
+                  // }}
+                />
+              </div>
+            </div>
             <div className="bg-white rounded-md p-3 sm:p-4 lg:p-6 border">
               <h4 className="mb-0 text-2xl font-semibold">Trip Details</h4>
               <div className="border border-dashed my-8"></div>

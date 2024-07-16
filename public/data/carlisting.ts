@@ -1,27 +1,33 @@
 export const carlistings = [
     {
-        id: 1,
-        title: 'Toyota Corolla',
-        driverPicture:'/img/chauffeur.png',
-        driverName:'Eden Ezer',
-        driverNumber: '6*******',
-        driverLocation:'Melen Yaounde',
-        driverMail: '***@gmail.com',
-        price: 3000,
-        img:'/img/car-list-1.jpg',
+        id: 1, //identifiant du voyage
+        title: 'Toyota Corolla',// Marque et nom de voiture
+        driverPicture:'/img/chauffeur.png',// photo du chauffeur
+        driverName:'Eden Ezer',//Nom du chauffeur
+        driverNumber: '6*******',//Numero de telephone du chauffeur
+        driverLocation:'Melen Yaounde',//Lieu de residence du chauffeur
+        driverMail: '***@gmail.com',//email du chauffeur
+        price: 3000,//prix d'une place normale
+        childPrice:2500,//prix d'une place enfant
+        handicapPrice:2500,//prix d'une place handicape
+        caringPrice:5000,//prix de la prise en charge d'un enfant ou d'un handicape qui voyage seul
+        img:'/img/car-list-1.jpg',//image du vehicule
         pass: 4,//Places passager normal
-        bag: 1,
-        maxDistance: 120,
-        fuelType:'Petrol',
-        boxType: 'Manual',
-        star: 3.5,
+        bag: 1,//Nombre de bagage par client
+        maxDistance: 120,//Pas important
+        fuelType:'Petrol',//Type de reservoir du vehicule
+        boxType: 'Manual',//boite manuelle ou auto
+        star: 3.5,//Evaluation du chauffeur
+        heart: 4,//Evaluation du chauffeur 
+        like:3,//Evaluation du chauffeur
+        unLike: 0,//Evaluation du chauffeur
         departureCity: 'Yaounde',
         arrivalCity: 'Douala',
         departureDay: 'Monday 08 july 2024',
         arrivalDay: 'Monday 08 july 2024',
         departureHour: '08:00',
         arrivalHour: '11:00',
-        travelClass: 'Economic'
+        travelClass: 'Economic'//Classe Economique, classique, medium ou VIP
     },
     {
         id: 2,

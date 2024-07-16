@@ -55,26 +55,26 @@ const page = () => {
               <div className="p-4 lg:py-6 lg:px-20 bg-white rounded-2xl shadow-lg xl:fixed">
                 <h4 className="mb-0 text-2xl font-semibold">Filter</h4>
                 <div className="border-t border-dashed my-6"></div>
-                <p className="mb-4 text-gray-600 text-xl font-bold">Category</p>
+                <p className="mb-4 text-gray-600 text-xl font-bold">{/* Category */}</p>
                 <select
                   className="w-full py-2 px-3 border border-gray-300 rounded-md text-xl font-normal"
                   value={optionCategory}
                   onChange={handleOptionCategoryChange}
                 >
-                  <option value="allCategory"></option>
+                  <option value="allCategory">Category</option>
                   <option value="Economic">Economic</option>
                   <option value="Classic">Classic</option>
                   <option value="VIP">VIP</option>
                 </select>
 
                 <div className="border-t border-dashed my-6"></div>
-                <p className="mb-4 text-[var(--neutral-700)] text-gray-600 text-xl font-semibold">Departure City</p>
+                <p className="mb-4 text-[var(--neutral-700)] text-gray-600 text-xl font-semibold">{/* Departure City */}</p>
                 <select
                   className="w-full py-2 px-3 border border-gray-300 rounded-md text-xl font-normal"
                   value={optionDepartureCity}
                   onChange={handleOptionDepartureCityChange}
                 >
-                  <option value="allCity"></option>
+                  <option value="allCity">Departure City</option>
                   <option value="Bafoussam">Bafoussam</option>
                   <option value="Bamenda">Bamenda</option>
                   <option value="Bertoua">Bertoua</option>
@@ -90,13 +90,13 @@ const page = () => {
                 </select>
 
                 <div className="border-t border-dashed my-6"></div>
-                <p className="mb-4 text-[var(--neutral-700)] text-gray-600 text-xl font-semibold">Arrival City</p>
+                <p className="mb-4 text-[var(--neutral-700)] text-gray-600 text-xl font-semibold">{/* Arrival City */}</p>
                 <select
                   className="w-full py-2 px-3 border border-gray-300 rounded-md text-xl font-normal"
                   value={optionArrivalCity}
                   onChange={handleOptionArrivalCityChange}
                 >
-                  <option value="allCity"></option>
+                  <option value="allCity">Arrival City</option>
                   <option value="Bafoussam">Bafoussam</option>
                   <option value="Bamenda">Bamenda</option>
                   <option value="Bertoua">Bertoua</option>
