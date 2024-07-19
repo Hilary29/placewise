@@ -14,25 +14,18 @@ import Services from "@/components/home-1/Services";
 import StartListing from "@/components/home-1/StartListing";
 import Testimonial from "@/components/home-1/Testimonial";
 import MobileMenu from "@/components/MobileMenu";
+import Link from "next/link";
 
 export default function Home() {
   return (
     <main>
       <HeaderTop />
       <CommonHeader />
-      <MobileMenu />
-      <Hero />
-      <Category />
-      <Property />
-      <NewListing />
-      <Services />
-      <Calculate />
-      <Benefit />
-      <Authors />
-      <Testimonial />
-      <StartListing />
-      <Faq />
-      <Footer />
+      <div className="px-[50%] py-[10%]">
+      <Link href="/reservationHilary1" className="btn-outline rounded-md font-semibold">
+        Voyages disponibles
+      </Link>
+      </div>
     </main>
   );
 }
